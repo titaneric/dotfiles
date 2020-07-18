@@ -36,12 +36,12 @@
                 "commandline": "cmd.exe",
                 "hidden": false
             },
-            {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            },
+            // {
+            //     "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            //     "hidden": false,
+            //     "name": "Azure Cloud Shell",
+            //     "source": "Windows.Terminal.Azure"
+            // },
             {
                 "guid": "{79d6b4fa-23a7-4194-950f-27617edcb6dc}",
                 "hidden": false,
@@ -49,8 +49,8 @@
                 // Path: C:\Users\user\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Anaconda3 (64-bit)\Anaconda Powershell Prompt (Anaconda3)
                 // Right click -> Properties -> Target
                 "commandline": "%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy ByPass -NoExit -Command \"& 'C:\\Users\\user\\Anaconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\Users\\user\\Anaconda3' \"",
-                "startingDirectory": "C:\\Users\\user\\Documents",
-                "icon": "C:\\Users\\user\\Documents\\python.png"
+                "startingDirectory": "%USERPROFILE%\\Documents",
+                "icon": "%USERPROFILE%\\Documents\\dotfiles\\wt\\python.png"
             },
             {
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
@@ -59,28 +59,25 @@
                 "source": "Windows.Terminal.Wsl"
             },
             {
-                // Make changes here to the powershell.exe profile.
                 "guid": "{bdcfeb89-7955-4e2b-b8ad-977961ceb04d}",
                 "name": "IoT",
                 "commandline": "ssh iot",
                 "hidden": false,
-                "icon": "C:\\Users\\user\\Documents\\ubuntu.png"
+                "icon": "%USERPROFILE%\\Documents\\dotfiles\\wt\\ubuntu.png"
             },
             {
-                // Make changes here to the powershell.exe profile.
                 "guid": "{613cf7a9-1173-4421-942f-8a01e65f0c11}",
                 "name": "TWCC",
                 "commandline": "ssh TWCC",
                 "hidden": false,
-                "icon": "C:\\Users\\user\\Documents\\ubuntu.png"
+                "icon": "%USERPROFILE%\\Documents\\dotfiles\\wt\\ubuntu.png"
             },
             {
-                // Make changes here to the powershell.exe profile.
                 "guid": "{86fc6a44-9bec-41e0-aed6-05f322185ffa}",
                 "name": "Lab-Server",
                 "commandline": "ssh Lab-Server",
                 "hidden": false,
-                "icon": "C:\\Users\\user\\Documents\\archlinux.png"
+                "icon": "%USERPROFILE%\\Documents\\dotfiles\\wt\\archlinux.png"
             }
         ]
     },
