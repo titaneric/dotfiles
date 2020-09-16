@@ -48,7 +48,7 @@
                 "name": "Anaconda",
                 // Path: C:\Users\user\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Anaconda3 (64-bit)\Anaconda Powershell Prompt (Anaconda3)
                 // Right click -> Properties -> Target
-                "commandline": "%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy ByPass -NoExit -Command \"& 'C:\\Users\\user\\Anaconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate 'C:\\Users\\user\\Anaconda3' \"",
+                "commandline": "%windir%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -ExecutionPolicy ByPass -NoExit -Command \"& '%USERPROFILE%\\Anaconda3\\shell\\condabin\\conda-hook.ps1' ; conda activate '%USERPROFILE%\\Anaconda3' \"",
                 "startingDirectory": "%USERPROFILE%\\Documents",
                 "icon": "%USERPROFILE%\\Documents\\dotfiles\\wt\\python.png"
             },
