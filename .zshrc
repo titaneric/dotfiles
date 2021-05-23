@@ -15,3 +15,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 setopt share_history
+
+# add new zsh completion to fpath
+fpath=($fpath $HOME/.zsh/completion)
