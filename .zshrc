@@ -17,4 +17,4 @@ SAVEHIST=1000
 setopt share_history
 
 # add new zsh completion to fpath
-fpath=($fpath $HOME/.zsh/completion)
+fpath=($fpath $HOME/.zsh/completion $HOMEBREW_PREFIX/share/zsh/site-functions)
