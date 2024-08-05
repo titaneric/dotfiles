@@ -25,3 +25,9 @@ end
 fish_add_path -gP "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin";
 ! set -q MANPATH; and set MANPATH ''; set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH;
 ! set -q INFOPATH; and set INFOPATH ''; set -gx INFOPATH "$HOMEBREW_PREFIX/share/info" $INFOPATH;
+
+set -gx KREW_ROOT "$HOME/.krew"
+set -gx GIT_SSH_COMMAND "ssh -i $HOME/.ssh/github"
+
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.krew/bin
