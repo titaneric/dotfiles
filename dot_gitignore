@@ -1,0 +1,9 @@
+vector-[0-9]*/
+traefik-[0-9]*/
+loki-[0-9]*/
+contour-[0-9]*/
+alloy-[0-9]*/
+argo-cd-[0-9]*/
+beyla-[0-9]*/
+tempo-distributed-[0-9]*/
+tempo-vulture-[0-9]*/

@@ -1,0 +1,5 @@
+command_timeout=600000
+
+[kubernetes]
+format = 'on [⛵ $cluster](dimmed green) '
+disabled = false

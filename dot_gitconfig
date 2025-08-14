@@ -1,0 +1,55 @@
+[credential]
+	helper = osxkeychain
+[diff]
+	external = difft
+	tool = difftastic
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
+[alias]
+	dft = difftool
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+	sort = version:refname
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[init]
+	defaultBranch = main
+[core]
+	excludesfile = ~/.gitignore
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[includeIf "gitdir:~/oss/"]
+	path = ~/.gitconfig-oss
+[includeIf "gitdir:~/mine/"]
+	path = ~/.gitconfig-oss
+[includeIf "gitdir:~/sources/"]
+	path = ~/.gitconfig-company
+[includeIf "gitdir:~/project-repo/"]
+	path = ~/.gitconfig-company

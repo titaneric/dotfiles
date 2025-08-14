@@ -1,0 +1,8 @@
+[user]
+        name = eric-cy-huang
+        email = eric.cy.huang@linecorp.com
+        signingkey = 7E2E971BEF029EDD
+
+[url "ssh://git@git.linecorp.com:22/"]
+	insteadOf = git@git.linecorp.com:
+	insteadOf = https://git.linecorp.com/
