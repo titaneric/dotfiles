@@ -1,0 +1,6 @@
+[env]
+TERM = "xterm-256color" 		# macOS | Linux
+
+[terminal.shell]
+program = "/opt/homebrew/bin/fish"
+args = ["--login"]
