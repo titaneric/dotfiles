@@ -47,7 +47,7 @@
 	autoupdate = true
 [includeIf "gitdir:~/oss/"]
 	path = ~/.gitconfig-oss
-[includeIf "gitdir:~/mine/"]
+[includeIf "gitdir:~/.local/"]
 	path = ~/.gitconfig-oss
 [includeIf "gitdir:~/sources/"]
 	path = ~/.gitconfig-company
