@@ -1,0 +1,55 @@
+# https://github.com/natelandau/dotfiles/blob/master/dotfiles/.chezmoiscripts/run_onchange_before_10-homebrew-packages.sh.tmpl
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+{{ template "shared_script_utils.bash" . }}
+
+export HOMEBREW_NO_INSTALL_UPGRADE=TRUE
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+formulae=(
+    {{ range $package := .packages.homebrew.common.formulae }}
+    "{{ $package }}"
+    {{ end }}
+
+    {{ if .dev_computer }}
+    {{ range $package := .packages.homebrew.dev_computer.formulae }}
+    "{{ $package }}"
+    {{ end }}
+    {{ end }}
+
+    {{ if .homelab_member }}
+    {{ range $package := .packages.homebrew.homelab_member.formulae }}
+    "{{ $package }}"
+    {{ end }}
+    {{ end }}
+
+    {{ if .personal_computer }}
+    {{ range $package := .packages.homebrew.personal_computer.formulae }}
+    "{{ $package }}"
+    {{ end }}
+    {{ end }}
+)
+
+currently_installed_formulae=($(brew list --formula -1))
+currently_installed_casks=($(brew list --cask -1))
+
+header "Install Homebrew packages"
+
+brew update
+
+BREW_DIR="$(brew --prefix)/bin/"
+
+for formula in ${formulae[@]}; do
+    if ! _inArray_ -i "${formula}" "${currently_installed_formulae[@]}"; then
+        if [[ ! -e "${BREW_DIR}/${formula}" ]]; then
+            brew install -q --formula ${formula}
+        fi
+    fi
+done
+
+success "Homebrew packages installed"
+
+_safeExit_
+
+{{- end }}
