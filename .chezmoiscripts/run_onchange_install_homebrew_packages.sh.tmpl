@@ -1,7 +1,7 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
 
-header "Install Homebrew packages"
+echo "Install Homebrew packages"
 
 brew update
 
@@ -9,12 +9,12 @@ BREW_DIR="$(brew --prefix)/bin/"
 
 brew bundle install --file=$HOME/Brewfile
 
-success "Homebrew packages installed"
+echo "Homebrew packages installed"
 
-header "Remove Homebrew packages"
+echo "Remove Homebrew packages"
 
 brew bundle cleanup --force --file=$HOME/Brewfile
 
-success "Homebrew packages removed"
+echo "Homebrew packages removed"
 
 {{- end }}
