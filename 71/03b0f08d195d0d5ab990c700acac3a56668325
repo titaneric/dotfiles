@@ -1,0 +1,22 @@
+dot_gitconfig-company.tmpl
+  s_89a93f16e355ae::t_b0f9b0e04fa448 3-5
+  s_89a93f16e355ae::t_d9c5dc35e210c8 1,7-10
+.gitignore
+  s_89a93f16e355ae::t_955501460db999 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "7103b0f08d195d0d5ab990c700acac3a56668325",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
