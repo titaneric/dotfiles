@@ -1,0 +1,23 @@
+examples/chezmoidata/opencode.toml
+  s_89a93f16e355ae::t_348984e465b64b 6-8,11-13
+dot_config/opencode/opencode.json.tmpl
+  s_89a93f16e355ae::t_348984e465b64b 6-7,39-42
+README.md
+  s_89a93f16e355ae::t_962e8dae2005b5 126-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "946a7ba826d72b27f8f3583bbbc4030fc00c1aea",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
