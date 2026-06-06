@@ -145,13 +145,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$GITHUB_WORKSPACE/.chezmoidata" "$GITHUB_WORKSPACE/.chezmoitemplates/opencode"
+          mkdir -p "$GITHUB_WORKSPACE/.chezmoidata"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/git.toml" "$GITHUB_WORKSPACE/.chezmoidata/git.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/fish.toml" "$GITHUB_WORKSPACE/.chezmoidata/fish.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/homebrew.toml" "$GITHUB_WORKSPACE/.chezmoidata/homebrew.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/opencode.toml" "$GITHUB_WORKSPACE/.chezmoidata/opencode.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/vscode.toml" "$GITHUB_WORKSPACE/.chezmoidata/vscode.toml"
-          cp "$GITHUB_WORKSPACE/examples/chezmoitemplates/opencode/company-mcp.json.tmpl" "$GITHUB_WORKSPACE/.chezmoitemplates/opencode/company-mcp.json.tmpl"
 
       - name: Prepare fake home
         shell: bash

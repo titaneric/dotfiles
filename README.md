@@ -12,7 +12,7 @@ Never commit real values for any of these:
 - Company hostnames, internal registry URLs, internal MCP URLs, internal model gateway URLs, or private project paths unless they are approved for public release.
 - `~/.ssh` private keys, `~/.gnupg` key material, `~/.kube/config`, Docker auth files, cloud credential databases, or generated login/session state.
 - Local chezmoi data under `.chezmoidata/*.toml` when it contains machine, company, or secret values.
-- Internal template fragments such as `.chezmoitemplates/opencode/company-mcp.json.tmpl`.
+- Internal MCP endpoints, model gateways, or private provider details in local data files such as `.chezmoidata/opencode.toml`.
 
 Before committing, check ignored private files are really ignored:
 
@@ -22,8 +22,7 @@ git check-ignore -v \
   .chezmoidata/fish.toml \
   .chezmoidata/homebrew.toml \
   .chezmoidata/opencode.toml \
-  .chezmoidata/vscode.toml \
-  .chezmoitemplates/opencode/company-mcp.json.tmpl
+  .chezmoidata/vscode.toml
 ```
 
 Before pushing to the public repo, run a secret scan if available:
@@ -46,19 +45,17 @@ chezmoi diff
 Create local/private data files before the first full apply if this machine needs company or machine-specific configuration. Start from the sanitized samples and edit only the ignored local copies:
 
 ```sh
-mkdir -p .chezmoidata .chezmoitemplates/opencode
+mkdir -p .chezmoidata
 cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
 cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
 cp examples/chezmoidata/vscode.toml .chezmoidata/vscode.toml
-cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
 $EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
 $EDITOR .chezmoidata/vscode.toml
-$EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
 Then apply:
@@ -86,9 +83,8 @@ Current ignored local data files:
 | `.chezmoidata/git.toml` | Work Git identity and URL rewrite data for `.gitconfig-company`. |
 | `.chezmoidata/fish.toml` | Private shell paths, environment variables, local source files, and aliases. |
 | `.chezmoidata/homebrew.toml` | Company-specific Homebrew taps, formulae, casks, and App Store apps. |
-| `.chezmoidata/opencode.toml` | OpenCode machine profile and company provider settings. |
+| `.chezmoidata/opencode.toml` | OpenCode machine profile, company provider settings, and structured MCP servers. |
 | `.chezmoidata/vscode.toml` | VS Code Insiders company endpoints, currently GitLens remote host metadata. |
-| `.chezmoitemplates/opencode/company-mcp.json.tmpl` | Internal OpenCode MCP entries, kept outside the public repo. |
 
 Sample files live under `examples/`. They are tracked, sanitized, and ignored by chezmoi target management via `.chezmoiignore`.
 
@@ -99,18 +95,16 @@ Sample files live under `examples/`. They are tracked, sanitized, and ignored by
 | `examples/chezmoidata/homebrew.toml` | `.chezmoidata/homebrew.toml` |
 | `examples/chezmoidata/opencode.toml` | `.chezmoidata/opencode.toml` |
 | `examples/chezmoidata/vscode.toml` | `.chezmoidata/vscode.toml` |
-| `examples/chezmoitemplates/opencode/company-mcp.json.tmpl` | `.chezmoitemplates/opencode/company-mcp.json.tmpl` |
 
 To bootstrap editable local copies from the samples:
 
 ```sh
-mkdir -p .chezmoidata .chezmoitemplates/opencode
+mkdir -p .chezmoidata
 cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
 cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
 cp examples/chezmoidata/vscode.toml .chezmoidata/vscode.toml
-cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
 Then edit only the ignored local copies:
@@ -121,7 +115,6 @@ $EDITOR .chezmoidata/fish.toml
 $EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
 $EDITOR .chezmoidata/vscode.toml
-$EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
 Do not put real secrets, real company hostnames, private project paths, or personal identifiers into `examples/`. If the sample shape changes, update both the sample file and the consuming template together.
@@ -130,9 +123,29 @@ Prefer not to store long-lived secrets directly in `.chezmoidata/fish.toml` if a
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, the custom OpenAI provider and company MCP entries are not rendered.
 
-The internal MCP fragment is included only on company machines. It must be JSONC-compatible with the surrounding `mcp` object in `dot_config/opencode/opencode.json.tmpl`. Use a leading comma when adding entries because the public template already renders the generic `sequential-thinking` entry first.
+Internal MCP servers are included only on company machines and are configured as TOML data under `.chezmoidata/opencode.toml`. Do not edit raw JSON fragments or manage commas manually; `dot_config/opencode/opencode.json.tmpl` renders the final JSON object.
 
-Keep the real MCP fragment in a company-internal repo or generate it locally. Do not commit real internal MCP config to the public repo.
+Example MCP server data:
+
+```toml
+[opencode.mcp]
+enabled = true
+
+[[opencode.mcp.servers]]
+name = "internal-docs"
+type = "local"
+command = [
+  "npx",
+  "@example/internal-mcp-connector@latest",
+  "https://mcp.example.internal/docs",
+]
+enabled = false
+
+[opencode.mcp.servers.environment]
+NPM_CONFIG_REGISTRY = "https://npm.example.internal"
+```
+
+Keep real MCP server names, internal URLs, registry URLs, and tokens in ignored `.chezmoidata/opencode.toml`, not in the public repo.
 
 ### VS Code Insiders
 

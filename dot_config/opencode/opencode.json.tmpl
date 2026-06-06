@@ -3,6 +3,10 @@
 {{- if and $isCompanyComputer (not $model) -}}
 {{- $model = "gemini-3.5-flash" -}}
 {{- end -}}
+{{- $mcpServers := list -}}
+{{- if and $isCompanyComputer (dig "opencode" "mcp" "enabled" true .) -}}
+{{- $mcpServers = dig "opencode" "mcp" "servers" list . -}}
+{{- end -}}
 {
   "$schema": "https://opencode.ai/config.json",
   "share": "disabled",
@@ -35,7 +39,7 @@
         "baseURL": "{{ dig "opencode" "companyOpenAI" "baseURL" "" . }}",
         "apiKey": "{{ dig "opencode" "companyOpenAI" "apiKey" "x" . }}",
         "headers": {
-          "{{ dig "opencode" "companyOpenAI" "headerName" "x-bf-vk" . }}": "{env:{{ dig "opencode" "companyOpenAI" "tokenEnv" "SRE_LLM_PAT" . }}}"
+          "{{ dig "opencode" "companyOpenAI" "headerName" "x-company-token-header" . }}": "{env:{{ dig "opencode" "companyOpenAI" "tokenEnv" "COMPANY_LLM_TOKEN" . }}}"
         }
       },
       "models": {
@@ -428,6 +432,7 @@
       ],
       "environment": {},
       "enabled": true
-    }{{ if $isCompanyComputer }}{{ includeTemplate "opencode/company-mcp.json.tmpl" . | trimSuffix "\n" }}{{ end }}
+    }{{- range $server := $mcpServers }},
+    "{{ $server.name }}": {{ omit $server "name" | toPrettyJson | trimSuffix "\n" | replace "\n" "\n    " }}{{- end }}
   }
 }
