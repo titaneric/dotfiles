@@ -1,0 +1,5 @@
+{{- $gitAI := dig "git" "gitAI" dict . -}}
+{{- if and (get $gitAI "enabled") (get $gitAI "trace2EventTarget") -}}
+[trace2]
+	eventTarget = {{ $gitAI.trace2EventTarget }}
+{{- end }}

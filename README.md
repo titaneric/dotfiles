@@ -152,12 +152,41 @@ That target is private (`0600`) because the source uses chezmoi's `private_` att
 Company Git config is templated by:
 
 ```text
-dot_gitconfig-company.tmpl
+private_dot_gitconfig-company.tmpl
 ```
 
-It reads `.git.company` data from `.chezmoidata/git.toml`.
+It reads `.git.company` data from `.chezmoidata/git.toml`. The target is private (`0600`) because it can include company-only credential rewrites.
 
-The top-level Git config includes `.gitconfig-company` only for configured work directories. Keep company identity and internal Git host data out of tracked public files.
+The top-level Git config includes `.gitconfig-company` only for configured work directories. Keep company identity, internal Git host data, and PAT-backed URL rewrites out of tracked public files.
+
+Optional PAT-backed Git URL rewrites belong in ignored local data only:
+
+```toml
+[git.company.oauth]
+enabled = true
+base = "https://oauth2:<token>@git.example.internal"
+insteadOf = [
+  "https://git.example.internal",
+]
+```
+
+Prefer Git credential helpers, SSH keys, or a company-approved secret manager over long-lived PATs in files. If a PAT is stored locally, keep it only in ignored `.chezmoidata/git.toml`, rotate it regularly, and never copy it into tracked files.
+
+`git-ai` writes machine-local trace settings. The managed base Git config includes a private optional file:
+
+```text
+~/.gitconfig-git-ai
+```
+
+Enable it with ignored local data:
+
+```toml
+[git.gitAI]
+enabled = true
+trace2EventTarget = "af_unix:stream:$HOME/.git-ai/internal/daemon/trace2.sock"
+```
+
+If `git-ai` changes the socket path, update `.chezmoidata/git.toml` instead of committing the generated trace setting into `dot_gitconfig`.
 
 ### OpenCode
 

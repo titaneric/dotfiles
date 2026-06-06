@@ -9,3 +9,14 @@ insteadOf = [
   "git@git.example.internal:",
   "https://git.example.internal/",
 ]
+
+[git.company.oauth]
+enabled = false
+base = "https://oauth2:<token>@git.example.internal"
+insteadOf = [
+  "https://git.example.internal",
+]
+
+[git.gitAI]
+enabled = false
+trace2EventTarget = "af_unix:stream:$HOME/.git-ai/internal/daemon/trace2.sock"

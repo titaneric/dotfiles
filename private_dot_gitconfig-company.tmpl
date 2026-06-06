@@ -1,5 +1,6 @@
 {{- $companyGit := dig "git" "company" dict . -}}
 {{- if $companyGit -}}
+{{- $oauth := dig "git" "company" "oauth" dict . -}}
 [user]
         name = {{ $companyGit.user.name }}
         email = {{ $companyGit.user.email }}
@@ -8,5 +9,12 @@
 [url "{{ $companyGit.url.base }}"]
 {{- range $companyGit.url.insteadOf }}
 	insteadOf = {{ . }}
+{{- end }}
+{{- if and (dig "git" "company" "oauth" "enabled" false .) (get $oauth "base") }}
+
+[url "{{ $oauth.base }}"]
+{{- range $oauth.insteadOf }}
+	insteadOf = {{ . }}
+{{- end }}
 {{- end }}
 {{- end }}

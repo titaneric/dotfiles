@@ -4,3 +4,6 @@ examples
 {{ if not (dig "homebrew" "company" "enabled" false .) -}}
 private_Brewfile-company.tmpl
 {{ end -}}
+{{ if not (dig "git" "gitAI" "enabled" false .) -}}
+private_dot_gitconfig-git-ai.tmpl
+{{ end -}}
