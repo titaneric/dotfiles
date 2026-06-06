@@ -1,0 +1,485 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 0
+  },
+  "permission": {
+    "external_directory": {
+      "~/": "allow",
+    }
+  },
+  "model": "gemini-3.5-flash",
+  "enabled_providers": [
+    "openai"
+  ],
+  "plugin": [
+    "@devtheops/opencode-plugin-otel"
+  ],
+  "provider": {
+    "openai": {
+      "name": "SRE Gateway",
+      "options": {
+        "baseURL": "https://llm-gateway.line.dev/openai/v1",
+        "apiKey": "x",
+        "headers": {
+          "x-bf-vk": "{env:SRE_LLM_PAT}"
+        }
+      },
+      "models": {
+        "gpt-5.5": {
+          "id": "gpt-5.5",
+          "name": "GPT-5.5",
+          "limit": {
+            "context": 1050000,
+            "input": 922000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 5,
+            "output": 30
+          },
+          "options": {
+            "reasoningEffort": "xhigh",
+            "textVerbosity": "high",
+            "reasoningSummary": "auto",
+            "include": [
+              "reasoning.encrypted_content"
+            ]
+          },
+          "temperature": false,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "low": {
+              "reasoningEffort": "low",
+              "textVerbosity": "low"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "textVerbosity": "medium"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "textVerbosity": "high"
+            },
+            "xhigh": {
+              "reasoningEffort": "xhigh",
+              "textVerbosity": "high"
+            }
+          }
+        },
+        "gpt-5": {
+          "id": "gpt-5",
+          "name": "GPT-5",
+          "limit": {
+            "context": 400000,
+            "input": 272000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 1.25,
+            "output": 10
+          }
+        },
+        "gpt-5.4": {
+          "id": "gpt-5.4",
+          "name": "GPT-5.4",
+          "limit": {
+            "context": 1050000,
+            "input": 922000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 2.5,
+            "output": 15
+          }
+        },
+        "gpt-5.4-mini": {
+          "id": "gpt-5.4-mini",
+          "name": "GPT-5.4 mini",
+          "limit": {
+            "context": 400000,
+            "input": 272000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 0.75,
+            "output": 4.5
+          }
+        },
+        "gpt-5.4-nano": {
+          "id": "gpt-5.4-nano",
+          "name": "GPT-5.4 nano",
+          "limit": {
+            "context": 400000,
+            "input": 272000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 0.2,
+            "output": 1.25
+          }
+        },
+        "gpt-5.4-pro": {
+          "id": "gpt-5.4-pro",
+          "name": "GPT-5.4 Pro",
+          "limit": {
+            "context": 1050000,
+            "input": 922000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 30,
+            "output": 180
+          }
+        },
+        "gpt-5.5-pro": {
+          "id": "gpt-5.5-pro",
+          "name": "GPT-5.5 Pro",
+          "limit": {
+            "context": 1050000,
+            "input": 922000,
+            "output": 128000
+          },
+          "cost": {
+            "input": 30,
+            "output": 180
+          }
+        },
+        "gemini-3.1-pro-preview": {
+          "id": "gemini/gemini-3.1-pro-preview",
+          "name": "Gemini 3.1 Pro Preview",
+          "limit": {
+            "context": 1114112,
+            "input": 1048576,
+            "output": 65536
+          },
+          "cost": {
+            "input": 2,
+            "output": 12,
+            "cache_read": 0.2,
+            "context_over_200k": {
+              "input": 4,
+              "output": 18,
+              "cache_read": 0.4
+            }
+          },
+          "options": {
+            "reasoningSummary": "auto"
+          },
+          "temperature": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "auto"
+            }
+          }
+        },
+        "gemini-3-flash-preview": {
+          "id": "gemini/gemini-3-flash-preview",
+          "name": "Gemini 3 Flash Preview",
+          "limit": {
+            "context": 1114112,
+            "input": 1048576,
+            "output": 65536
+          },
+          "cost": {
+            "input": 0.5,
+            "output": 3,
+            "cache_read": 0.05
+          },
+          "options": {
+            "reasoningSummary": "auto"
+          },
+          "temperature": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "minimal": {
+              "reasoningEffort": "minimal"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "auto"
+            }
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "id": "gemini/gemini-3.1-flash-lite",
+          "name": "Gemini 3.1 Flash-Lite",
+          "limit": {
+            "context": 1114112,
+            "input": 1048576,
+            "output": 65536
+          },
+          "cost": {
+            "input": 0.25,
+            "output": 1.5,
+            "cache_read": 0.025
+          },
+          "options": {
+            "reasoningSummary": "auto"
+          },
+          "temperature": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "minimal": {
+              "reasoningEffort": "minimal"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "auto"
+            }
+          }
+        },
+        "gemini-3.5-flash": {
+          "id": "gemini/gemini-3.5-flash",
+          "name": "Gemini 3.5 Flash",
+          "limit": {
+            "context": 1114112,
+            "input": 1048576,
+            "output": 65536
+          },
+          "cost": {
+            "input": 1.5,
+            "output": 9,
+            "cache_read": 0.15
+          },
+          "options": {
+            "reasoningEffort": "medium",
+            "reasoningSummary": "auto"
+          },
+          "temperature": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "minimal": {
+              "reasoningEffort": "minimal"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "auto"
+            }
+          }
+        },
+        "gemini-3.1-flash-lite-preview": {
+          "id": "gemini/gemini-3.1-flash-lite-preview",
+          "name": "Gemini 3.1 Flash-Lite Preview",
+          "limit": {
+            "context": 1114112,
+            "input": 1048576,
+            "output": 65536
+          },
+          "cost": {
+            "input": 0.25,
+            "output": 1.5,
+            "cache_read": 0.025
+          },
+          "options": {
+            "reasoningSummary": "auto"
+          },
+          "temperature": true,
+          "reasoning": true,
+          "tool_call": true,
+          "modalities": {
+            "input": [
+              "text",
+              "image",
+              "audio",
+              "video",
+              "pdf"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "variants": {
+            "minimal": {
+              "reasoningEffort": "minimal"
+            },
+            "low": {
+              "reasoningEffort": "low",
+              "reasoningSummary": "auto"
+            },
+            "medium": {
+              "reasoningEffort": "medium",
+              "reasoningSummary": "auto"
+            },
+            "high": {
+              "reasoningEffort": "high",
+              "reasoningSummary": "auto"
+            }
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "environment": {},
+      "enabled": true
+    },
+    "confluence": {
+      "type": "local",
+      "environment": {
+        "BUN_CONFIG_REGISTRY": "https://npm.linecorp.com"
+      },
+      "command": [
+        "npx",
+        "@linecorp/flava-mcp-connector@latest",
+        "https://confluence-noahs.kks.mcp.prd.flava.workers-infra.com/mcp"
+      ],
+      "enabled": false
+    },
+    "slack": {
+      "type": "local",
+      "environment": {
+        "BUN_CONFIG_REGISTRY": "https://npm.linecorp.com"
+      },
+      "command": [
+        "npx",
+        "@linecorp/flava-mcp-connector@latest",
+        "https://slack-noahs.kks.mcp.prd.flava.workers-infra.com/mcp"
+      ],
+      "enabled": false
+    },
+    "grafana": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-grafana"
+      ],
+      "environment": {
+        "GRAFANA_URL": "https://observe.line.dev",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "{env:GRAFANA_TOKEN}"
+      },
+      "enabled": false
+    },
+    "terraform": {
+      "type": "local",
+      "command": [
+        "podman",
+        "run",
+        "-i",
+        "-e",
+        "LOG_DEBUG",
+        "-e",
+        "TFE_TOKEN",
+        "--rm",
+        "hashicorp/terraform-mcp-server"
+      ],
+      "environment": {
+        "TFE_TOKEN": "${env:TF_APP_TOKEN}",
+        "LOG_LEVEL": "debug",
+      },
+      "enabled": false
+    },
+    "k8s": {
+      "type": "local",
+      "command": [
+        "kubectl-ai",
+        "--mcp-server",
+      ],
+      "enabled": false
+    },
+  }
+}
