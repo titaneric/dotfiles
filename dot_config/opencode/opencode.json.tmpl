@@ -34,7 +34,7 @@
 {{- if $isCompanyComputer }}
   "provider": {
     "openai": {
-      "name": "SRE Gateway",
+      "name": "LLM Gateway",
       "options": {
         "baseURL": "{{ dig "opencode" "companyOpenAI" "baseURL" "" . }}",
         "apiKey": "{{ dig "opencode" "companyOpenAI" "apiKey" "x" . }}",
