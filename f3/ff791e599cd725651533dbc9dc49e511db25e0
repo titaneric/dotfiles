@@ -1,0 +1,33 @@
+.skills/chezmoi-reference/references/scripts-apply.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-78
+.skills/chezmoi-reference/references/reference-map.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-32
+.skills/chezmoi-reference/SKILL.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-57
+.skills/chezmoi-reference/references/templates-data.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-81
+.skills/chezmoi-reference/references/acceptance-criteria.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-36
+.chezmoiignore.tmpl
+  s_89a93f16e355ae::t_15588266cb4bc6 3
+.skills/chezmoi-reference/references/commands.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-61
+.skills/chezmoi-reference/references/source-state.md
+  s_89a93f16e355ae::t_15588266cb4bc6 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "f3ff791e599cd725651533dbc9dc49e511db25e0",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
