@@ -1,3 +1,8 @@
+{{- $isCompanyComputer := dig "opencode" "isCompanyComputer" false . -}}
+{{- $model := dig "opencode" "model" "" . -}}
+{{- if and $isCompanyComputer (not $model) -}}
+{{- $model = "gemini-3.5-flash" -}}
+{{- end -}}
 {
   "$schema": "https://opencode.ai/config.json",
   "share": "disabled",
@@ -11,21 +16,26 @@
       "~/": "allow",
     }
   },
-  "model": "gemini-3.5-flash",
+{{- if $model }}
+  "model": "{{ $model }}",
+{{- end }}
+{{- if $isCompanyComputer }}
   "enabled_providers": [
     "openai"
   ],
+{{- end }}
   "plugin": [
     "@devtheops/opencode-plugin-otel"
   ],
+{{- if $isCompanyComputer }}
   "provider": {
     "openai": {
       "name": "SRE Gateway",
       "options": {
-        "baseURL": "",
-        "apiKey": "x",
+        "baseURL": "{{ dig "opencode" "companyOpenAI" "baseURL" "" . }}",
+        "apiKey": "{{ dig "opencode" "companyOpenAI" "apiKey" "x" . }}",
         "headers": {
-          "x-bf-vk": "{env:SRE_LLM_PAT}"
+          "{{ dig "opencode" "companyOpenAI" "headerName" "x-bf-vk" . }}": "{env:{{ dig "opencode" "companyOpenAI" "tokenEnv" "SRE_LLM_PAT" . }}}"
         }
       },
       "models": {
@@ -408,5 +418,16 @@
       }
     }
   },
-  "mcp": {}
+{{- end }}
+  "mcp": {
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "environment": {},
+      "enabled": true
+    }{{ if $isCompanyComputer }}{{ includeTemplate "opencode/company-mcp.json.tmpl" . | trimSuffix "\n" }}{{ end }}
+  }
 }

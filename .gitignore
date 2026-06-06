@@ -1,2 +1,4 @@
 # Local/private chezmoi data used by templates.
 .chezmoidata/git.toml
+.chezmoidata/opencode.toml
+.chezmoitemplates/opencode/company-mcp.json.tmpl
