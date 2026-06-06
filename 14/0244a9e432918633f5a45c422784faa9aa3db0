@@ -1,0 +1,23 @@
+.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl
+  s_89a93f16e355ae::t_2fcb5fcdbd8148 34-37
+  s_89a93f16e355ae::t_fd8c6710f7ba37 1-33,38-42
+.chezmoiscripts/run_onchange_install_homebrew_packages.sh.tmpl
+  s_89a93f16e355ae::t_fd8c6710f7ba37 3,7-22,27-29,32,38,42
+  s_89a93f16e355ae::t_2fcb5fcdbd8148 23-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "140244a9e432918633f5a45c422784faa9aa3db0",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
