@@ -1,0 +1,23 @@
+.chezmoiscripts/run_once_after_10-install-krew.sh.tmpl
+  s_89a93f16e355ae::t_506fed2a24965e 1-45
+.chezmoiscripts/run_onchange_after_20-install-krew-plugins.sh.tmpl
+  s_89a93f16e355ae::t_506fed2a24965e 1-52
+dot_krew-plugin.txt
+  s_89a93f16e355ae::t_f5524b1877e935 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "fff6713b033664405bc2458e8f65f2adfe543004",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
