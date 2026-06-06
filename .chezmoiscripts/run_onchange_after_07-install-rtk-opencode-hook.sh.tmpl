@@ -1,0 +1,47 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Install RTK OpenCode hook"
+
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return 0
+  fi
+
+  for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+    if [ -x "$brew_bin" ]; then
+      printf '%s\n' "$brew_bin"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if brew_bin="$(find_brew)"; then
+  eval "$("$brew_bin" shellenv)"
+fi
+
+if ! command -v rtk >/dev/null 2>&1; then
+  echo "Skip RTK OpenCode hook install: rtk is not installed"
+  exit 0
+fi
+
+if ! command -v opencode >/dev/null 2>&1; then
+  echo "Skip RTK OpenCode hook install: opencode is not installed"
+  exit 0
+fi
+
+if ! rtk gain >/dev/null 2>&1; then
+  echo "Skip RTK OpenCode hook install: rtk gain failed; wrong rtk binary may be installed" >&2
+  exit 1
+fi
+
+# Brewfile template hash: {{ include "Brewfile.tmpl" | sha256sum }}
+# Homebrew category data hash: {{ toJson (dig "homebrew" "categories" dict .) | sha256sum }}
+rtk init -g --opencode
+
+echo "RTK OpenCode hook installed"
+{{- end }}

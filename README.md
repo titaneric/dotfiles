@@ -260,6 +260,7 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | `.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl` | Installs Homebrew on macOS if `brew` is missing. |
 | `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile.tmpl`, Homebrew category data, company Homebrew data, or the script changes. |
 | `.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl` | Installs Worktrunk's OpenCode plugin after Homebrew packages are available. |
+| `.chezmoiscripts/run_onchange_after_07-install-rtk-opencode-hook.sh.tmpl` | Installs RTK's OpenCode hook after Homebrew packages are available. |
 
 The public base Brewfile is:
 
@@ -311,6 +312,26 @@ wt config plugins opencode install --yes
 ```
 
 The plugin writes tool-generated state to `~/.config/opencode/plugins/worktrunk.ts`. That file is intentionally not managed by chezmoi; Worktrunk owns it.
+
+RTK is installed from Homebrew as part of the `ai` category:
+
+```ruby
+brew "rtk"
+```
+
+The RTK OpenCode hook is installed by:
+
+```text
+.chezmoiscripts/run_onchange_after_07-install-rtk-opencode-hook.sh.tmpl
+```
+
+The script follows RTK's OpenCode setup command:
+
+```sh
+rtk init -g --opencode
+```
+
+Before running the hook setup, the script verifies `rtk gain` works so a different binary named `rtk` is not accidentally configured. The hook writes tool-generated state to `~/.config/opencode/plugins/rtk.ts`. That file is intentionally not managed by chezmoi; RTK owns it.
 
 Company Homebrew entries are generated from ignored local data into:
 
