@@ -12,4 +12,7 @@ argo-workflows-[0-9]*/
 argocd-apps-[0-9]*/
 graphify-out/manifest.json
 graphify-out/cost.json
-graphify-out/cache
+graphify-out/cache/
+docs/graphify-out/manifest.json
+docs/graphify-out/cost.json
+docs/graphify-out/cache/
