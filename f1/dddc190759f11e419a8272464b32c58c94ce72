@@ -1,0 +1,25 @@
+Brewfile
+  s_89a93f16e355ae::t_f2193108c36cf9 35,57
+.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl
+  s_89a93f16e355ae::t_afb093d8018ef7 38
+  s_89a93f16e355ae::t_f2193108c36cf9 1-37,39-41
+README.md
+  s_89a93f16e355ae::t_1bf8951c06465d 229,237-251,253-256,265-267,270
+  s_89a93f16e355ae::t_afb093d8018ef7 252
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "f1dddc190759f11e419a8272464b32c58c94ce72",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
