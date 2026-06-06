@@ -34,7 +34,8 @@ if ! command -v opencode >/dev/null 2>&1; then
   exit 0
 fi
 
-# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# Brewfile template hash: {{ include "Brewfile.tmpl" | sha256sum }}
+# Homebrew category data hash: {{ toJson (dig "homebrew" "categories" dict .) | sha256sum }}
 wt config plugins opencode install --yes
 
 echo "Worktrunk OpenCode plugin installed"

@@ -1,0 +1,83 @@
+{{- $common := dig "homebrew" "categories" "common" true . -}}
+{{- $dev := dig "homebrew" "categories" "dev" true . -}}
+{{- $devops := dig "homebrew" "categories" "devops" true . -}}
+{{- $ai := dig "homebrew" "categories" "ai" true . -}}
+{{- $personal := dig "homebrew" "categories" "personal" true . -}}
+{{ if $devops -}}
+# category: devops
+tap "grafana/grafana"
+tap "hashicorp/tap"
+tap "minio/stable"
+tap "vectordotdev/brew"
+brew "argocd"
+brew "helm"
+brew "k6"
+brew "kubeshark"
+brew "kustomize"
+brew "logcli"
+brew "hashicorp/tap/terraform"
+brew "minio/stable/mc"
+brew "openstackclient"
+brew "opentofu"
+brew "podman"
+brew "tflint"
+{{ end -}}
+{{ if $common }}
+# category: common
+brew "atuin"
+brew "bat"
+brew "chezmoi"
+brew "difftastic"
+brew "direnv"
+brew "eza"
+brew "fd"
+brew "fish"
+brew "fzf"
+brew "gh"
+brew "htop"
+brew "jq"
+brew "ripgrep"
+brew "starship"
+brew "telnet"
+brew "tmux"
+brew "tree"
+brew "uutils-coreutils"
+brew "watch"
+brew "yq"
+brew "zellij"
+brew "zoxide"
+{{ end -}}
+{{ if $dev }}
+# category: dev
+brew "openssl@3"
+brew "cryptography"
+brew "git-absorb"
+brew "git-crypt"
+brew "git-filter-repo"
+brew "libgpg-error"
+brew "go"
+brew "golangci-lint"
+brew "gpgme"
+brew "graphviz"
+brew "hurl"
+brew "just"
+brew "openapi-generator"
+brew "pkgconf"
+brew "pre-commit"
+brew "python-setuptools"
+brew "python@3.11"
+brew "sccache"
+brew "shellcheck"
+brew "tokei"
+brew "uv"
+{{ end -}}
+{{ if $ai }}
+# category: ai
+brew "anomalyco/tap/opencode"
+brew "worktrunk"
+{{ end -}}
+{{ if $personal }}
+# category: personal
+brew "typst"
+brew "zola"
+{{ end -}}

@@ -26,7 +26,8 @@ if ! brew_bin="$(find_brew)"; then
 fi
 eval "$("$brew_bin" shellenv)"
 
-# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# Brewfile template hash: {{ include "Brewfile.tmpl" | sha256sum }}
+# Homebrew category data hash: {{ toJson (dig "homebrew" "categories" dict .) | sha256sum }}
 # Company Brewfile data hash: {{ toJson (dig "homebrew" "company" dict .) | sha256sum }}
 base_brewfile="$HOME/Brewfile"
 company_brewfile="$HOME/Brewfile-company"

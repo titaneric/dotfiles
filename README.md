@@ -225,14 +225,39 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | Script | Behavior |
 |---|---|
 | `.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl` | Installs Homebrew on macOS if `brew` is missing. |
-| `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile`, company Homebrew data, or the script changes. |
+| `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile.tmpl`, Homebrew category data, company Homebrew data, or the script changes. |
 | `.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl` | Installs Worktrunk's OpenCode plugin after Homebrew packages are available. |
 
 The public base Brewfile is:
 
 ```text
-Brewfile
+Brewfile.tmpl -> ~/Brewfile
 ```
+
+Base packages are grouped into category blocks. Categories default to enabled, preserving the full public package set unless local data opts out.
+
+Toggle categories in `.chezmoidata/homebrew.toml`:
+
+```toml
+[homebrew.categories]
+common = true
+dev = true
+devops = true
+ai = true
+personal = true
+```
+
+Current category intent:
+
+| Category | Purpose |
+|---|---|
+| `common` | Shell, terminal, Git UX, and everyday CLI tools used by the shared dotfiles. |
+| `dev` | Language/toolchain/build/API development utilities. |
+| `devops` | Kubernetes, cloud, infrastructure, and observability-oriented tooling. |
+| `ai` | AI coding tools and related agent workflow tools. |
+| `personal` | Personal publishing/writing tools, including `typst` and `zola`. |
+
+When adding a new public package, put it in one category block in `Brewfile.tmpl`. If a package is company-only, keep it in `.chezmoidata/homebrew.toml` so it renders to `~/Brewfile-company` instead.
 
 OpenCode is installed from the OpenCode tap recommended by the official docs:
 

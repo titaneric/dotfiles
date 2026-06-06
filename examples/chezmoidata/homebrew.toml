@@ -1,3 +1,10 @@
+[homebrew.categories]
+common = true
+dev = true
+devops = true
+ai = true
+personal = true
+
 [homebrew.company]
 enabled = true
 brews = [
