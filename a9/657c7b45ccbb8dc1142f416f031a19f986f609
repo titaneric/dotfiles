@@ -1,0 +1,26 @@
+.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl
+  s_89a93f16e355ae::t_5e7ed456c63574 30-34,42-46
+.github/workflows/chezmoi.yml
+  s_89a93f16e355ae::t_5e7ed456c63574 1-232,236-251
+  s_89a93f16e355ae::t_d12e401c56465e 233-235
+README.md
+  s_89a93f16e355ae::t_5e7ed456c63574 243
+dot_gitconfig-company.tmpl
+  s_89a93f16e355ae::t_5e7ed456c63574 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "a9657c7b45ccbb8dc1142f416f031a19f986f609",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
