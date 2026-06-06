@@ -27,20 +27,40 @@ fi
 eval "$("$brew_bin" shellenv)"
 
 # Brewfile hash: {{ include "Brewfile" | sha256sum }}
+# Company Brewfile data hash: {{ toJson (dig "homebrew" "company" dict .) | sha256sum }}
+base_brewfile="$HOME/Brewfile"
+company_brewfile="$HOME/Brewfile-company"
+bundle_brewfile="$base_brewfile"
+tmpdir=""
+
+cleanup() {
+  if [ -n "$tmpdir" ]; then
+    rm -rf "$tmpdir"
+  fi
+}
+trap cleanup EXIT
+
+if [ -s "$company_brewfile" ]; then
+  tmpdir="$(mktemp -d)"
+  bundle_brewfile="$tmpdir/Brewfile"
+  cat "$base_brewfile" "$company_brewfile" > "$bundle_brewfile"
+  echo "Use merged Homebrew bundle with company packages"
+fi
+
 if [ "${CHEZMOI_SKIP_BREW_UPDATE:-0}" = "1" ]; then
   echo "Skip Homebrew update"
 else
   brew update
 fi
 
-brew bundle install --file="$HOME/Brewfile"
+brew bundle install --file="$bundle_brewfile"
 
 echo "Homebrew packages installed"
 
 echo "Remove Homebrew packages"
 
 if [ "${CHEZMOI_BREW_BUNDLE_CLEANUP:-1}" = "1" ]; then
-  brew bundle cleanup --force --file="$HOME/Brewfile"
+  brew bundle cleanup --force --file="$bundle_brewfile"
 else
   echo "Skip Homebrew package cleanup"
 fi

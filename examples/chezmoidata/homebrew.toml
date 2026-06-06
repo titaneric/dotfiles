@@ -1,0 +1,11 @@
+[homebrew.company]
+enabled = true
+brews = [
+  "company/tap/companyctl",
+]
+casks = []
+mas = []
+
+[[homebrew.company.taps]]
+name = "company/tap"
+url = "https://brew.example.internal/homebrew-tap"

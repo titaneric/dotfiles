@@ -1,0 +1,12 @@
+{{ range (dig "homebrew" "company" "taps" list .) -}}
+tap {{ .name | quote }}{{ with .url }}, {{ . | quote }}{{ end }}
+{{ end -}}
+{{ range (dig "homebrew" "company" "brews" list .) -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range (dig "homebrew" "company" "casks" list .) -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ range (dig "homebrew" "company" "mas" list .) -}}
+mas {{ .name | quote }}, id: {{ .id }}
+{{ end -}}

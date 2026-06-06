@@ -20,6 +20,7 @@ Before committing, check ignored private files are really ignored:
 git check-ignore -v \
   .chezmoidata/git.toml \
   .chezmoidata/fish.toml \
+  .chezmoidata/homebrew.toml \
   .chezmoidata/opencode.toml \
   .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
@@ -47,10 +48,12 @@ Create local/private data files before the first full apply if this machine need
 mkdir -p .chezmoidata .chezmoitemplates/opencode
 cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
+cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
 cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
+$EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
 $EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
@@ -79,6 +82,7 @@ Current ignored local data files:
 |---|---|
 | `.chezmoidata/git.toml` | Work Git identity and URL rewrite data for `.gitconfig-company`. |
 | `.chezmoidata/fish.toml` | Private shell paths, environment variables, local source files, and aliases. |
+| `.chezmoidata/homebrew.toml` | Company-specific Homebrew taps, formulae, casks, and App Store apps. |
 | `.chezmoidata/opencode.toml` | OpenCode machine profile and company provider settings. |
 | `.chezmoitemplates/opencode/company-mcp.json.tmpl` | Internal OpenCode MCP entries, kept outside the public repo. |
 
@@ -88,6 +92,7 @@ Sample files live under `examples/`. They are tracked, sanitized, and ignored by
 |---|---|
 | `examples/chezmoidata/git.toml` | `.chezmoidata/git.toml` |
 | `examples/chezmoidata/fish.toml` | `.chezmoidata/fish.toml` |
+| `examples/chezmoidata/homebrew.toml` | `.chezmoidata/homebrew.toml` |
 | `examples/chezmoidata/opencode.toml` | `.chezmoidata/opencode.toml` |
 | `examples/chezmoitemplates/opencode/company-mcp.json.tmpl` | `.chezmoitemplates/opencode/company-mcp.json.tmpl` |
 
@@ -97,6 +102,7 @@ To bootstrap editable local copies from the samples:
 mkdir -p .chezmoidata .chezmoitemplates/opencode
 cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
+cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
 cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
@@ -106,6 +112,7 @@ Then edit only the ignored local copies:
 ```sh
 $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
+$EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
 $EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
@@ -176,7 +183,21 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | Script | Behavior |
 |---|---|
 | `.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl` | Installs Homebrew on macOS if `brew` is missing. |
-| `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile` or the script changes. |
+| `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile`, company Homebrew data, or the script changes. |
+
+The public base Brewfile is:
+
+```text
+Brewfile
+```
+
+Company Homebrew entries are generated from ignored local data into:
+
+```text
+~/Brewfile-company
+```
+
+`~/Brewfile-company` is managed only when `.chezmoidata/homebrew.toml` sets `homebrew.company.enabled = true`. The package script concatenates `~/Brewfile` and `~/Brewfile-company` into a temporary merged Brewfile before running install and cleanup, so company packages are not removed by cleanup.
 
 The package script currently runs:
 
