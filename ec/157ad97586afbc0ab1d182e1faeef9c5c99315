@@ -1,0 +1,21 @@
+.chezmoiscripts/run_onchange_after_07-install-rtk-opencode-hook.sh.tmpl
+  s_89a93f16e355ae::t_13b9cb4a5c1e49 1-47
+README.md
+  s_89a93f16e355ae::t_13b9cb4a5c1e49 263,316-334
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "ec157ad97586afbc0ab1d182e1faeef9c5c99315",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
