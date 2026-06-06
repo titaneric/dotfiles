@@ -1,0 +1,10 @@
+{{- $companyGit := .git.company -}}
+[user]
+        name = {{ $companyGit.user.name }}
+        email = {{ $companyGit.user.email }}
+        signingkey = {{ $companyGit.user.signingKey }}
+
+[url "{{ $companyGit.url.base }}"]
+{{- range $companyGit.url.insteadOf }}
+	insteadOf = {{ . }}
+{{- end }}
