@@ -1,0 +1,29 @@
+dot_gitconfig
+  s_89a93f16e355ae::t_d0a41fa5e7d714 58-59
+README.md
+  s_89a93f16e355ae::t_62ca7526ea54ad 155,158,160-189
+.chezmoiignore.tmpl
+  s_89a93f16e355ae::t_d0a41fa5e7d714 7-9
+examples/chezmoidata/git.toml
+  s_89a93f16e355ae::t_d0a41fa5e7d714 12-22
+private_dot_gitconfig-company.tmpl
+  s_89a93f16e355ae::t_d0a41fa5e7d714 3,13-19
+private_dot_gitconfig-git-ai.tmpl
+  s_89a93f16e355ae::t_d0a41fa5e7d714 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "ebeda72df623de703ac5b6e9e47bbe505e60bdf6",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
