@@ -1,4 +1,5 @@
-{{- $companyGit := .git.company -}}
+{{- $companyGit := dig "git" "company" dict . -}}
+{{- if $companyGit -}}
 [user]
         name = {{ $companyGit.user.name }}
         email = {{ $companyGit.user.email }}
@@ -7,4 +8,5 @@
 [url "{{ $companyGit.url.base }}"]
 {{- range $companyGit.url.insteadOf }}
 	insteadOf = {{ . }}
+{{- end }}
 {{- end }}

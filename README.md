@@ -240,7 +240,7 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | Script | Behavior |
 |---|---|
 | `.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl` | Installs Homebrew on macOS if `brew` is missing. |
-| `.chezmoiscripts/run_onchange_install_homebrew_packages.sh.tmpl` | Runs `brew bundle install` when `Brewfile` or the script changes. |
+| `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile` or the script changes. |
 
 The package script currently runs:
 

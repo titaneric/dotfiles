@@ -1,0 +1,251 @@
+name: chezmoi
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  public-render:
+    name: Public render (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/bin"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Install fish on Linux
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y fish
+
+      - name: Prepare fake home
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/home"
+
+      - name: Apply public config without scripts
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$HOME" \
+            apply --exclude scripts --force
+
+      - name: Check public fish syntax
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          fish -n "$HOME/.config/fish/config.fish"
+
+      - name: Check rendered script syntax
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          for script in "$GITHUB_WORKSPACE"/.chezmoiscripts/*.sh.tmpl; do
+            [ -e "$script" ] || continue
+            rendered_script="$RUNNER_TEMP/$(basename "$script" .tmpl)"
+            chezmoi \
+              --source "$GITHUB_WORKSPACE" \
+              --destination "$HOME" \
+              execute-template --file "$script" > "$rendered_script"
+            if [ -s "$rendered_script" ]; then
+              bash -n "$rendered_script"
+            fi
+          done
+
+  sample-company-render:
+    name: Sample company render
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/bin"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Install fish
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y fish
+
+      - name: Add sanitized local data
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$GITHUB_WORKSPACE/.chezmoidata" "$GITHUB_WORKSPACE/.chezmoitemplates/opencode"
+
+          cat > "$GITHUB_WORKSPACE/.chezmoidata/git.toml" <<'EOF'
+          [git.company.user]
+          name = "example-user"
+          email = "example@example.com"
+          signingKey = "EXAMPLEKEY"
+
+          [git.company.url]
+          base = "ssh://git@git.example.internal:22/"
+          insteadOf = [
+            "git@git.example.internal:",
+            "https://git.example.internal/",
+          ]
+          EOF
+
+          cat > "$GITHUB_WORKSPACE/.chezmoidata/fish.toml" <<'EOF'
+          [fish.private]
+          fishUserPaths = [
+            "$HOME/.local/bin",
+          ]
+          fishAddPaths = [
+            "$HOME/.example/bin",
+          ]
+          sourceFiles = []
+
+          [[fish.private.env]]
+          name = "COMPANY_LLM_TOKEN"
+          value = "placeholder-token"
+
+          [[fish.private.aliases]]
+          name = "ws"
+          value = "echo placeholder"
+          EOF
+
+          cat > "$GITHUB_WORKSPACE/.chezmoidata/opencode.toml" <<'EOF'
+          [opencode]
+          isCompanyComputer = true
+          model = "example-model"
+
+          [opencode.companyOpenAI]
+          baseURL = "https://llm-gateway.example.internal/openai/v1"
+          apiKey = "x"
+          headerName = "x-company-token-header"
+          tokenEnv = "COMPANY_LLM_TOKEN"
+          EOF
+
+          cat > "$GITHUB_WORKSPACE/.chezmoitemplates/opencode/company-mcp.json.tmpl" <<'EOF'
+          ,
+              "internal-docs": {
+                "type": "local",
+                "command": [
+                  "echo",
+                  "placeholder"
+                ],
+                "enabled": false
+              }
+          EOF
+
+      - name: Prepare fake home
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/home"
+
+      - name: Apply with sanitized local data without scripts
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$HOME" \
+            apply --exclude scripts --force
+
+      - name: Check rendered company-gated files
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          fish -n "$HOME/.config/fish/config.fish"
+          fish -n "$HOME/.config/fish/conf.d/local.fish"
+          grep -q 'example-model' "$HOME/.config/opencode/opencode.json"
+          grep -q 'internal-docs' "$HOME/.config/opencode/opencode.json"
+          grep -q 'example-user' "$HOME/.gitconfig-company"
+
+  script-smoke:
+    name: Script smoke test
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        shell: bash
+        run: |
+          set -euo pipefail
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/bin"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Prepare CI source and fake home
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/source" "$RUNNER_TEMP/home"
+          rsync -a --exclude '.git' "$GITHUB_WORKSPACE/" "$RUNNER_TEMP/source/"
+
+          cat > "$RUNNER_TEMP/source/Brewfile" <<'EOF'
+          # CI fixture: intentionally empty to exercise brew bundle without installing packages.
+          EOF
+
+          cat > "$RUNNER_TEMP/source/dot_krew-plugin.txt" <<'EOF'
+          # CI fixture: intentionally empty to exercise the krew plugin script without installing plugins.
+          EOF
+
+      - name: Apply with scripts against fake home
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+          CHEZMOI_SKIP_BREW_UPDATE: "1"
+          CHEZMOI_BREW_BUNDLE_CLEANUP: "0"
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+          HOMEBREW_NO_ANALYTICS: "1"
+        run: |
+          set -euo pipefail
+          chezmoi \
+            --source "$RUNNER_TEMP/source" \
+            --destination "$HOME" \
+            apply --force
+
+      - name: Check script smoke outputs
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          test -f "$HOME/Brewfile"
+          test -f "$HOME/.krew-plugin.txt"
+          test -x "$HOME/.krew/bin/kubectl-krew"

@@ -27,7 +27,11 @@ fi
 eval "$("$brew_bin" shellenv)"
 
 # Brewfile hash: {{ include "Brewfile" | sha256sum }}
-brew update
+if [ "${CHEZMOI_SKIP_BREW_UPDATE:-0}" = "1" ]; then
+  echo "Skip Homebrew update"
+else
+  brew update
+fi
 
 brew bundle install --file="$HOME/Brewfile"
 
@@ -35,7 +39,11 @@ echo "Homebrew packages installed"
 
 echo "Remove Homebrew packages"
 
-brew bundle cleanup --force --file="$HOME/Brewfile"
+if [ "${CHEZMOI_BREW_BUNDLE_CLEANUP:-1}" = "1" ]; then
+  brew bundle cleanup --force --file="$HOME/Brewfile"
+else
+  echo "Skip Homebrew package cleanup"
+fi
 
 echo "Homebrew packages removed"
 
