@@ -1,0 +1,31 @@
+.github/workflows/chezmoi.yml
+  s_89a93f16e355ae::t_34e60a5879d20a 87,136,168
+examples/chezmoidata/homebrew.toml
+  s_89a93f16e355ae::t_95966b7fd01e2b 1-11
+README.md
+  s_89a93f16e355ae::t_34e60a5879d20a 23,51,56,85,95,105,115,186-200
+.chezmoiignore.tmpl
+  s_89a93f16e355ae::t_95966b7fd01e2b 4-6
+private_Brewfile-company.tmpl
+  s_89a93f16e355ae::t_95966b7fd01e2b 1-12
+.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl
+  s_89a93f16e355ae::t_7ec9e2693a2f6c 30-49,56,63
+.gitignore
+  s_89a93f16e355ae::t_95966b7fd01e2b 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "9e44210e5088d74672bb91a4e24d3066283e2bc6",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
