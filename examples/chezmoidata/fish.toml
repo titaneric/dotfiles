@@ -1,0 +1,36 @@
+[fish.private]
+fishUserPaths = [
+  "/opt/homebrew/opt/example-tool/bin",
+  "$HOME/.local/bin",
+  "$HOME/path/to/private/project/.venv/bin",
+]
+fishAddPaths = [
+  "$HOME/.private-tool/bin",
+]
+sourceFiles = [
+  "$HOME/private-sdk/path.fish.inc",
+]
+
+[[fish.private.env]]
+name = "GOPRIVATE"
+value = "git.example.internal"
+
+[[fish.private.env]]
+name = "OTEL_RESOURCE_ATTRIBUTES"
+value = "user_id=<work-user-id>"
+
+[[fish.private.env]]
+name = "OPENCODE_RESOURCE_ATTRIBUTES"
+value = "user_id=<work-user-id>"
+
+[[fish.private.env]]
+name = "COMPANY_LLM_TOKEN"
+value = "<secret-token-or-env-reference>"
+
+[[fish.private.env]]
+name = "COMPANY_GIT_TOKEN"
+value = "<secret-token-or-env-reference>"
+
+[[fish.private.aliases]]
+name = "ws"
+value = "<private-workspace-command>"

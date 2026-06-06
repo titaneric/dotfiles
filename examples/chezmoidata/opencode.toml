@@ -1,0 +1,9 @@
+[opencode]
+isCompanyComputer = true
+model = "<company-model-name>"
+
+[opencode.companyOpenAI]
+baseURL = "https://llm-gateway.example.internal/openai/v1"
+apiKey = "x"
+headerName = "x-company-token-header"
+tokenEnv = "COMPANY_LLM_TOKEN"

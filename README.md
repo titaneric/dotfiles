@@ -41,10 +41,14 @@ chezmoi status
 chezmoi diff
 ```
 
-Create local/private data files before the first full apply if this machine needs company or machine-specific configuration:
+Create local/private data files before the first full apply if this machine needs company or machine-specific configuration. Start from the sanitized samples and edit only the ignored local copies:
 
 ```sh
 mkdir -p .chezmoidata .chezmoitemplates/opencode
+cp examples/chezmoidata/git.toml .chezmoidata/git.toml
+cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
+cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
+cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
 $EDITOR .chezmoidata/opencode.toml
@@ -78,111 +82,43 @@ Current ignored local data files:
 | `.chezmoidata/opencode.toml` | OpenCode machine profile and company provider settings. |
 | `.chezmoitemplates/opencode/company-mcp.json.tmpl` | Internal OpenCode MCP entries, kept outside the public repo. |
 
-All examples below use placeholders. Replace them only in ignored local files, never in tracked public files.
+Sample files live under `examples/`. They are tracked, sanitized, and ignored by chezmoi target management via `.chezmoiignore`.
 
-### `.chezmoidata/git.toml`
+| Sample file | Local/private destination |
+|---|---|
+| `examples/chezmoidata/git.toml` | `.chezmoidata/git.toml` |
+| `examples/chezmoidata/fish.toml` | `.chezmoidata/fish.toml` |
+| `examples/chezmoidata/opencode.toml` | `.chezmoidata/opencode.toml` |
+| `examples/chezmoitemplates/opencode/company-mcp.json.tmpl` | `.chezmoitemplates/opencode/company-mcp.json.tmpl` |
 
-```toml
-[git.company.user]
-name = "<work-git-name>"
-email = "<work-email@example.com>"
-signingKey = "<gpg-signing-key-id>"
+To bootstrap editable local copies from the samples:
 
-[git.company.url]
-base = "ssh://git@git.example.internal:22/"
-insteadOf = [
-  "git@git.example.internal:",
-  "https://git.example.internal/",
-]
+```sh
+mkdir -p .chezmoidata .chezmoitemplates/opencode
+cp examples/chezmoidata/git.toml .chezmoidata/git.toml
+cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
+cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
+cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
-### `.chezmoidata/fish.toml`
+Then edit only the ignored local copies:
 
-```toml
-[fish.private]
-fishUserPaths = [
-  "/opt/homebrew/opt/example-tool/bin",
-  "$HOME/.local/bin",
-  "$HOME/path/to/private/project/.venv/bin",
-]
-fishAddPaths = [
-  "$HOME/.private-tool/bin",
-]
-sourceFiles = [
-  "$HOME/private-sdk/path.fish.inc",
-]
-
-[[fish.private.env]]
-name = "GOPRIVATE"
-value = "git.example.internal"
-
-[[fish.private.env]]
-name = "OTEL_RESOURCE_ATTRIBUTES"
-value = "user_id=<work-user-id>"
-
-[[fish.private.env]]
-name = "OPENCODE_RESOURCE_ATTRIBUTES"
-value = "user_id=<work-user-id>"
-
-[[fish.private.env]]
-name = "COMPANY_LLM_TOKEN"
-value = "<secret-token-or-env-reference>"
-
-[[fish.private.env]]
-name = "COMPANY_GIT_TOKEN"
-value = "<secret-token-or-env-reference>"
-
-[[fish.private.aliases]]
-name = "ws"
-value = "<private-workspace-command>"
+```sh
+$EDITOR .chezmoidata/git.toml
+$EDITOR .chezmoidata/fish.toml
+$EDITOR .chezmoidata/opencode.toml
+$EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
-Prefer not to store long-lived secrets directly in `fish.toml` if a password manager or company secret manager can supply them. If you do store them locally, keep the file ignored and never paste its contents into public issues, logs, commits, or documentation.
+Do not put real secrets, real company hostnames, private project paths, or personal identifiers into `examples/`. If the sample shape changes, update both the sample file and the consuming template together.
 
-### `.chezmoidata/opencode.toml`
-
-```toml
-[opencode]
-isCompanyComputer = true
-model = "<company-model-name>"
-
-[opencode.companyOpenAI]
-baseURL = "https://llm-gateway.example.internal/openai/v1"
-apiKey = "x"
-headerName = "x-company-token-header"
-tokenEnv = "COMPANY_LLM_TOKEN"
-```
+Prefer not to store long-lived secrets directly in `.chezmoidata/fish.toml` if a password manager or company secret manager can supply them. If you do store them locally, keep the file ignored and never paste its contents into public issues, logs, commits, or documentation.
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, the custom OpenAI provider and company MCP entries are not rendered.
 
-### `.chezmoitemplates/opencode/company-mcp.json.tmpl`
+The internal MCP fragment is included only on company machines. It must be JSONC-compatible with the surrounding `mcp` object in `dot_config/opencode/opencode.json.tmpl`. Use a leading comma when adding entries because the public template already renders the generic `sequential-thinking` entry first.
 
-This file is included only on company machines. It must be JSONC-compatible with the surrounding `mcp` object in `dot_config/opencode/opencode.json.tmpl`.
-
-Use an empty file if the machine is a company computer but has no internal MCP entries:
-
-```jsonc
-```
-
-Use a leading comma when adding entries because the public template already renders the generic `sequential-thinking` entry first:
-
-```jsonc
-,
-    "internal-docs": {
-      "type": "local",
-      "environment": {
-        "NPM_CONFIG_REGISTRY": "https://npm.example.internal"
-      },
-      "command": [
-        "npx",
-        "@example/internal-mcp-connector@latest",
-        "https://mcp.example.internal/docs"
-      ],
-      "enabled": false
-    }
-```
-
-Keep this file in a company-internal repo or generate it locally. Do not commit it to the public repo.
+Keep the real MCP fragment in a company-internal repo or generate it locally. Do not commit real internal MCP config to the public repo.
 
 ## Managed Areas
 

@@ -1,0 +1,11 @@
+[git.company.user]
+name = "example-user"
+email = "example@example.com"
+signingKey = "EXAMPLEKEY"
+
+[git.company.url]
+base = "ssh://git@git.example.internal:22/"
+insteadOf = [
+  "git@git.example.internal:",
+  "https://git.example.internal/",
+]
