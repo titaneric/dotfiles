@@ -19,4 +19,5 @@ insteadOf = [
 
 [git.gitAI]
 enabled = false
+releaseTag = "latest"
 trace2EventTarget = "af_unix:stream:$HOME/.git-ai/internal/daemon/trace2.sock"

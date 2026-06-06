@@ -104,6 +104,21 @@ jobs:
             fi
           done
 
+      - name: Check git-ai installer syntax with sample data
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$HOME" \
+            execute-template \
+            --override-data '{"git":{"gitAI":{"enabled":true,"releaseTag":"latest","trace2EventTarget":"af_unix:stream:/tmp/git-ai/trace2.sock"}}}' \
+            --file "$GITHUB_WORKSPACE/.chezmoiscripts/run_onchange_after_15-install-git-ai.sh.tmpl" \
+            > "$RUNNER_TEMP/install-git-ai.sh"
+          bash -n "$RUNNER_TEMP/install-git-ai.sh"
+
   sample-company-render:
     name: Sample company render
     runs-on: ubuntu-latest

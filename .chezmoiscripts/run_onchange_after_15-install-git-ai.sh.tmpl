@@ -1,0 +1,72 @@
+{{- $gitAI := dig "git" "gitAI" dict . -}}
+{{- if and (or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux")) (get $gitAI "enabled") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+release_tag={{ get $gitAI "releaseTag" | default "latest" | quote }}
+trace2_event_target={{ get $gitAI "trace2EventTarget" | default (printf "af_unix:stream:%s/.git-ai/internal/daemon/trace2.sock" .chezmoi.homeDir) | quote }}
+install_dir="$HOME/.git-ai/bin"
+installer_url="https://usegitai.com/install.sh"
+
+for required_command in awk bash curl git; do
+  if ! command -v "$required_command" >/dev/null 2>&1; then
+    echo "git-ai installation requires $required_command" >&2
+    exit 1
+  fi
+done
+
+remove_git_ai_path_from_config() {
+  local config_file="$1"
+  local tmp_file
+
+  if [ ! -f "$config_file" ]; then
+    return 0
+  fi
+
+  tmp_file="${config_file}.git-ai-cleanup.$$"
+  awk -v install_dir="$install_dir" '
+    /# Added by git-ai installer/ {
+      skip_next = 1
+      next
+    }
+
+    skip_next {
+      if (index($0, install_dir) > 0) {
+        skip_next = 0
+        next
+      }
+      skip_next = 0
+    }
+
+    index($0, install_dir) > 0 && ($0 ~ /fish_add_path/ || $0 ~ /export PATH=/) {
+      next
+    }
+
+    { print }
+  ' "$config_file" > "$tmp_file"
+
+  mv "$tmp_file" "$config_file"
+}
+
+if [ "$release_tag" != "latest" ]; then
+  export GIT_AI_RELEASE_TAG="$release_tag"
+fi
+
+echo "Installing git-ai with the official installer (${release_tag})"
+curl --fail --location --silent --show-error "$installer_url" | bash
+
+remove_git_ai_path_from_config "$HOME/.config/fish/config.fish"
+remove_git_ai_path_from_config "$HOME/.zshrc"
+remove_git_ai_path_from_config "$HOME/.bashrc"
+remove_git_ai_path_from_config "$HOME/.bash_profile"
+
+# Keep installer-generated Git trace config out of the managed base gitconfig.
+generated_trace2_event_target="$(git config --file "$HOME/.gitconfig" --get trace2.eventTarget 2>/dev/null || true)"
+if [ -n "$generated_trace2_event_target" ]; then
+  trace2_event_target="$generated_trace2_event_target"
+fi
+
+git config --file "$HOME/.gitconfig" --unset-all trace2.eventTarget 2>/dev/null || true
+git config --file "$HOME/.gitconfig-git-ai" trace2.eventTarget "$trace2_event_target"
+chmod 600 "$HOME/.gitconfig-git-ai"
+{{- end }}
