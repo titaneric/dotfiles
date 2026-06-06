@@ -1,0 +1,52 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+KREW_ROOT="${KREW_ROOT:-$HOME/.krew}"
+KREW_BIN="$KREW_ROOT/bin/kubectl-krew"
+PLUGIN_FILE="$HOME/.krew-plugin.txt"
+
+if [ ! -x "$KREW_BIN" ]; then
+  echo "krew is required before installing krew plugins" >&2
+  exit 1
+fi
+
+if [ ! -f "$PLUGIN_FILE" ]; then
+  echo "krew plugin list not found at $PLUGIN_FILE" >&2
+  exit 1
+fi
+
+export PATH="$KREW_ROOT/bin:$PATH"
+
+is_installed() {
+  local plugin="$1"
+  local installed_plugin
+
+  while IFS= read -r installed_plugin; do
+    if [ "$installed_plugin" = "$plugin" ]; then
+      return 0
+    fi
+  done < <("$KREW_BIN" list)
+
+  return 1
+}
+
+# krew plugin list hash: {{ include "dot_krew-plugin.txt" | sha256sum }}
+"$KREW_BIN" update
+
+while IFS= read -r plugin || [ -n "$plugin" ]; do
+  case "$plugin" in
+    ''|'#'*)
+      continue
+      ;;
+  esac
+
+  if is_installed "$plugin"; then
+    echo "krew plugin already installed: $plugin"
+    continue
+  fi
+
+  echo "Installing krew plugin: $plugin"
+  "$KREW_BIN" install "$plugin"
+done < "$PLUGIN_FILE"
+{{- end }}

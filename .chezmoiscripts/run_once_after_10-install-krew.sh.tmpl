@@ -1,0 +1,45 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+KREW_ROOT="${KREW_ROOT:-$HOME/.krew}"
+KREW_BIN="$KREW_ROOT/bin/kubectl-krew"
+
+if [ -x "$KREW_BIN" ]; then
+  echo "krew is already installed at $KREW_BIN"
+  exit 0
+fi
+
+for required_command in curl git tar uname sed tr; do
+  if ! command -v "$required_command" >/dev/null 2>&1; then
+    echo "krew installation requires $required_command" >&2
+    exit 1
+  fi
+done
+
+tmpdir="$(mktemp -d)"
+cleanup() {
+  rm -rf "$tmpdir"
+}
+trap cleanup EXIT
+
+echo "Installing krew"
+(
+  set -x
+  cd "$tmpdir"
+  OS="$(uname | tr '[:upper:]' '[:lower:]')"
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')"
+  KREW="krew-${OS}_${ARCH}"
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz"
+  tar zxvf "${KREW}.tar.gz"
+  "./${KREW}" install krew
+)
+
+if [ ! -x "$KREW_BIN" ]; then
+  echo "krew installation completed, but $KREW_BIN was not found" >&2
+  exit 1
+fi
+
+echo "krew installed at $KREW_BIN"
+"$KREW_BIN" version
+{{- end }}
