@@ -1,0 +1,42 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return 0
+  fi
+
+  for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$brew_bin" ]; then
+      printf '%s\n' "$brew_bin"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if brew_bin="$(find_brew)"; then
+  echo "Homebrew is already installed at $brew_bin"
+  exit 0
+fi
+
+if ! command -v curl >/dev/null 2>&1; then
+  echo "curl is required to install Homebrew" >&2
+  exit 1
+fi
+
+echo "Installing Homebrew"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+if ! brew_bin="$(find_brew)"; then
+  echo "Homebrew installation completed, but brew was not found" >&2
+  exit 1
+fi
+eval "$("$brew_bin" shellenv)"
+
+echo "Homebrew installed at $brew_bin"
+brew --version
+{{- end }}

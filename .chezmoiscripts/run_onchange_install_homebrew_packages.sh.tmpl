@@ -1,19 +1,41 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
+set -euo pipefail
 
 echo "Install Homebrew packages"
 
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return 0
+  fi
+
+  for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$brew_bin" ]; then
+      printf '%s\n' "$brew_bin"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if ! brew_bin="$(find_brew)"; then
+  echo "Homebrew is required before installing Brewfile packages" >&2
+  exit 1
+fi
+eval "$("$brew_bin" shellenv)"
+
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
 brew update
 
-BREW_DIR="$(brew --prefix)/bin/"
-
-brew bundle install --file=$HOME/Brewfile
+brew bundle install --file="$HOME/Brewfile"
 
 echo "Homebrew packages installed"
 
 echo "Remove Homebrew packages"
 
-brew bundle cleanup --force --file=$HOME/Brewfile
+brew bundle cleanup --force --file="$HOME/Brewfile"
 
 echo "Homebrew packages removed"
 
