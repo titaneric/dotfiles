@@ -1,0 +1,5 @@
+[vscode.insiders]
+
+[[vscode.insiders.gitlensRemotes]]
+domain = "git.example.internal"
+type = "GitHub"

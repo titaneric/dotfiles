@@ -150,6 +150,7 @@ jobs:
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/fish.toml" "$GITHUB_WORKSPACE/.chezmoidata/fish.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/homebrew.toml" "$GITHUB_WORKSPACE/.chezmoidata/homebrew.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/opencode.toml" "$GITHUB_WORKSPACE/.chezmoidata/opencode.toml"
+          cp "$GITHUB_WORKSPACE/examples/chezmoidata/vscode.toml" "$GITHUB_WORKSPACE/.chezmoidata/vscode.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoitemplates/opencode/company-mcp.json.tmpl" "$GITHUB_WORKSPACE/.chezmoitemplates/opencode/company-mcp.json.tmpl"
 
       - name: Prepare fake home
@@ -181,6 +182,20 @@ jobs:
           grep -q 'internal-docs' "$HOME/.config/opencode/opencode.json"
           grep -q 'example-user' "$HOME/.gitconfig-company"
           grep -q 'company/tap/companyctl' "$HOME/Brewfile-company"
+
+      - name: Check VS Code Insiders sample settings
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$HOME" \
+            execute-template \
+            --file "$GITHUB_WORKSPACE/private_Library/private_Application Support/private_Code - Insiders/User/settings.json.tmpl" \
+            > "$RUNNER_TEMP/vscode-insiders-settings.jsonc"
+          grep -q 'git.example.internal' "$RUNNER_TEMP/vscode-insiders-settings.jsonc"
 
   script-smoke:
     name: Script smoke test

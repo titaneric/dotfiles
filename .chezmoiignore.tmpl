@@ -1,6 +1,9 @@
 README.md
 .github
 examples
+{{ if ne .chezmoi.os "darwin" -}}
+private_Library
+{{ end -}}
 {{ if not (dig "homebrew" "company" "enabled" false .) -}}
 private_Brewfile-company.tmpl
 {{ end -}}

@@ -1,0 +1,170 @@
+{
+  "terminal.integrated.inheritEnv": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "python.languageServer": "Pylance",
+  "editor.suggestSelection": "first",
+  "settingsSync.ignoredExtensions": [
+    "Vue.volar",
+    "vscjava.vscode-java-pack",
+    "miguelsolorio.fluent-icons",
+    "james-yu.latex-workshop",
+    "felixfbecker.php-pack",
+    "grapecity.gc-excelviewer",
+  ],
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook",
+  },
+  "vim.useCtrlKeys": false,
+  "git.autofetch": true,
+  "peacock.favoriteColors": [
+    {
+      "name": "Angular Red",
+      "value": "#dd0531",
+    },
+    {
+      "name": "Azure Blue",
+      "value": "#007fff",
+    },
+    {
+      "name": "JavaScript Yellow",
+      "value": "#f9e64f",
+    },
+    {
+      "name": "Mandalorian Blue",
+      "value": "#1857a4",
+    },
+    {
+      "name": "Node Green",
+      "value": "#215732",
+    },
+    {
+      "name": "React Blue",
+      "value": "#61dafb",
+    },
+    {
+      "name": "Something Different",
+      "value": "#832561",
+    },
+    {
+      "name": "Svelte Orange",
+      "value": "#ff3d00",
+    },
+    {
+      "name": "Vue Green",
+      "value": "#42b883",
+    },
+  ],
+  "cSpell.userWords": ["kubernetes"],
+  "go.toolsManagement.autoUpdate": true,
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  "redhat.telemetry.enabled": true,
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left",
+  },
+  "workbench.colorTheme": "One Dark Modern",
+  "yaml.customTags": ["!encrypted/pkcs1-oaep scalar", "!vault scalar"],
+  "[python]": {
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+  },
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "editor.formatOnSave": true,
+  "git.suggestSmartCommit": false,
+  "git.confirmSync": false,
+  "gitlens.advanced.externalDiffTool": "difftastic",
+  "diffEditor.maxComputationTime": 0,
+  "workbench.editor.empty.hint": "hidden",
+  "git.openRepositoryInParentFolders": "never",
+  "gitlens.currentLine.enabled": false,
+  "application.shellEnvironmentResolutionTimeout": 30,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "scminput": false
+  },
+  "notebook.editorOptionsCustomizations": {
+    "editor.tabSize": 4,
+    "editor.indentSize": 4,
+    "editor.insertSpaces": false,
+  },
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "diffEditor.renderSideBySide": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "remote.SSH.connectTimeout": 30,
+  "remote.SSH.logLevel": "trace",
+  "remote.SSH.remotePlatform": {
+    "utm-ubuntu": "linux",
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "explorer.autoReveal": true,
+  "explorer.openEditors.visible": 9,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+  "terminal.integrated.shellIntegration.history": 500,
+  "terminal.integrated.defaultProfile.linux": "fish",
+  "git.enableCommitSigning": true,
+  "git-graph.repository.commits.showSignatureStatus": true,
+  "git-graph.repository.sign.commits": true,
+  "git-graph.repository.sign.tags": true,
+  "rust-analyzer.cargo.extraEnv": {
+    "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "rust-analyzer.cargo.allTargets": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "terminal.integrated.suggest.enabled": false,
+  "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "files.insertFinalNewline": true,
+  "githubPullRequests.createOnPublishBranch": "never",
+  "gitlens.remotes": [
+{{- range (dig "vscode" "insiders" "gitlensRemotes" list .) }}
+    {
+      "domain": {{ .domain | quote }},
+      "type": {{ .type | quote }},
+    },
+{{- end }}
+  ],
+  "githubPullRequests.pullBranch": "never",
+  "chat.tools.terminal.outputLocation": "chat",
+  "chat.viewSessions.orientation": "stacked",
+  "git.replaceTagsWhenPull": true,
+  "chat.hookFilesLocations": {
+    "~/.github/hooks": true,
+  },
+  "terminal.integrated.env.linux": {},
+  "chat.tools.urls.autoApprove": {},
+  "chat.tools.terminal.autoApprove": {
+    "git --no-pager -c color.ui=never": true,
+  },
+  "githubIssues.queries": [
+
+  ],
+}

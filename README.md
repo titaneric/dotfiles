@@ -22,6 +22,7 @@ git check-ignore -v \
   .chezmoidata/fish.toml \
   .chezmoidata/homebrew.toml \
   .chezmoidata/opencode.toml \
+  .chezmoidata/vscode.toml \
   .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
@@ -50,11 +51,13 @@ cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
 cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
+cp examples/chezmoidata/vscode.toml .chezmoidata/vscode.toml
 cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
 $EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
+$EDITOR .chezmoidata/vscode.toml
 $EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
@@ -84,6 +87,7 @@ Current ignored local data files:
 | `.chezmoidata/fish.toml` | Private shell paths, environment variables, local source files, and aliases. |
 | `.chezmoidata/homebrew.toml` | Company-specific Homebrew taps, formulae, casks, and App Store apps. |
 | `.chezmoidata/opencode.toml` | OpenCode machine profile and company provider settings. |
+| `.chezmoidata/vscode.toml` | VS Code Insiders company endpoints, currently GitLens remote host metadata. |
 | `.chezmoitemplates/opencode/company-mcp.json.tmpl` | Internal OpenCode MCP entries, kept outside the public repo. |
 
 Sample files live under `examples/`. They are tracked, sanitized, and ignored by chezmoi target management via `.chezmoiignore`.
@@ -94,6 +98,7 @@ Sample files live under `examples/`. They are tracked, sanitized, and ignored by
 | `examples/chezmoidata/fish.toml` | `.chezmoidata/fish.toml` |
 | `examples/chezmoidata/homebrew.toml` | `.chezmoidata/homebrew.toml` |
 | `examples/chezmoidata/opencode.toml` | `.chezmoidata/opencode.toml` |
+| `examples/chezmoidata/vscode.toml` | `.chezmoidata/vscode.toml` |
 | `examples/chezmoitemplates/opencode/company-mcp.json.tmpl` | `.chezmoitemplates/opencode/company-mcp.json.tmpl` |
 
 To bootstrap editable local copies from the samples:
@@ -104,6 +109,7 @@ cp examples/chezmoidata/git.toml .chezmoidata/git.toml
 cp examples/chezmoidata/fish.toml .chezmoidata/fish.toml
 cp examples/chezmoidata/homebrew.toml .chezmoidata/homebrew.toml
 cp examples/chezmoidata/opencode.toml .chezmoidata/opencode.toml
+cp examples/chezmoidata/vscode.toml .chezmoidata/vscode.toml
 cp examples/chezmoitemplates/opencode/company-mcp.json.tmpl .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
@@ -114,6 +120,7 @@ $EDITOR .chezmoidata/git.toml
 $EDITOR .chezmoidata/fish.toml
 $EDITOR .chezmoidata/homebrew.toml
 $EDITOR .chezmoidata/opencode.toml
+$EDITOR .chezmoidata/vscode.toml
 $EDITOR .chezmoitemplates/opencode/company-mcp.json.tmpl
 ```
 
@@ -126,6 +133,32 @@ Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal
 The internal MCP fragment is included only on company machines. It must be JSONC-compatible with the surrounding `mcp` object in `dot_config/opencode/opencode.json.tmpl`. Use a leading comma when adding entries because the public template already renders the generic `sequential-thinking` entry first.
 
 Keep the real MCP fragment in a company-internal repo or generate it locally. Do not commit real internal MCP config to the public repo.
+
+### VS Code Insiders
+
+VS Code Insiders user settings are managed on macOS only:
+
+```text
+private_Library/private_Application Support/private_Code - Insiders/User/settings.json.tmpl
+```
+
+The template renders to:
+
+```text
+~/Library/Application Support/Code - Insiders/User/settings.json
+```
+
+Company-specific endpoints are read from ignored local data:
+
+```toml
+[vscode.insiders]
+
+[[vscode.insiders.gitlensRemotes]]
+domain = "git.example.internal"
+type = "GitHub"
+```
+
+Keep real GitLens remote domains and other internal VS Code endpoints in `.chezmoidata/vscode.toml`, not in the public template. Non-macOS machines ignore the `private_Library/` source tree through `.chezmoiignore.tmpl`.
 
 ## Managed Areas
 
