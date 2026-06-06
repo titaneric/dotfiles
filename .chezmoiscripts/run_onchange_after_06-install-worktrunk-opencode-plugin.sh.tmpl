@@ -1,0 +1,41 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Install Worktrunk OpenCode plugin"
+
+find_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    command -v brew
+    return 0
+  fi
+
+  for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+    if [ -x "$brew_bin" ]; then
+      printf '%s\n' "$brew_bin"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+if brew_bin="$(find_brew)"; then
+  eval "$("$brew_bin" shellenv)"
+fi
+
+if ! command -v wt >/dev/null 2>&1; then
+  echo "Skip Worktrunk OpenCode plugin install: wt is not installed"
+  exit 0
+fi
+
+if ! command -v opencode >/dev/null 2>&1; then
+  echo "Skip Worktrunk OpenCode plugin install: opencode is not installed"
+  exit 0
+fi
+
+# Brewfile hash: {{ include "Brewfile" | sha256sum }}
+wt config plugins opencode install --yes
+
+echo "Worktrunk OpenCode plugin installed"
+{{- end }}

@@ -226,12 +226,33 @@ Homebrew bootstrap is managed by chezmoi scripts:
 |---|---|
 | `.chezmoiscripts/run_once_before_00-install-homebrew.sh.tmpl` | Installs Homebrew on macOS if `brew` is missing. |
 | `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile`, company Homebrew data, or the script changes. |
+| `.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl` | Installs Worktrunk's OpenCode plugin after Homebrew packages are available. |
 
 The public base Brewfile is:
 
 ```text
 Brewfile
 ```
+
+OpenCode is installed from the OpenCode tap recommended by the official docs:
+
+```ruby
+brew "anomalyco/tap/opencode"
+```
+
+Worktrunk is installed from Homebrew:
+
+```ruby
+brew "worktrunk"
+```
+
+After Homebrew installs `wt` and `opencode`, the Worktrunk plugin script runs:
+
+```sh
+wt config plugins opencode install --yes
+```
+
+The plugin writes tool-generated state to `~/.config/opencode/plugins/worktrunk.ts`. That file is intentionally not managed by chezmoi; Worktrunk owns it.
 
 Company Homebrew entries are generated from ignored local data into:
 
@@ -241,10 +262,12 @@ Company Homebrew entries are generated from ignored local data into:
 
 `~/Brewfile-company` is managed only when `.chezmoidata/homebrew.toml` sets `homebrew.company.enabled = true`. The package script concatenates `~/Brewfile` and `~/Brewfile-company` into a temporary merged Brewfile before running install and cleanup, so company packages are not removed by cleanup.
 
-The package script currently runs:
+The package script currently runs cleanup against the effective bundle file. On machines without `~/Brewfile-company`, that is `~/Brewfile`. On company machines, it is a temporary merged file containing both `~/Brewfile` and `~/Brewfile-company`.
+
+The cleanup command is:
 
 ```sh
-brew bundle cleanup --force --file="$HOME/Brewfile"
+brew bundle cleanup --force --file="$bundle_brewfile"
 ```
 
 That can remove Homebrew packages not listed in `Brewfile`. Review `Brewfile` before a full apply.
