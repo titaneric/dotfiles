@@ -1,0 +1,33 @@
+.github/workflows/chezmoi.yml
+  s_89a93f16e355ae::t_c7952ee84fb99c 196
+  s_89a93f16e355ae::t_dfa9cd42ed5e33 153,186-195,197-198
+README.md
+  s_89a93f16e355ae::t_385e15b97d8cae 137-141,143-160,162
+  s_89a93f16e355ae::t_c7952ee84fb99c 142,161
+  s_89a93f16e355ae::t_dfa9cd42ed5e33 25,54,60,90,101,112,123
+"private_Library/private_Application Support/private_Code - Insiders/User/settings.json.tmpl"
+  s_89a93f16e355ae::t_c7952ee84fb99c 1-170
+examples/chezmoidata/vscode.toml
+  s_89a93f16e355ae::t_1b1d8fbebeaa17 1-5
+.chezmoiignore.tmpl
+  s_89a93f16e355ae::t_c7952ee84fb99c 5
+  s_89a93f16e355ae::t_1b1d8fbebeaa17 4,6
+.gitignore
+  s_89a93f16e355ae::t_1b1d8fbebeaa17 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "70e64956684adfbb4e1262b7511b8fa598ae6122",
+  "prompts": {},
+  "sessions": {
+    "s_89a93f16e355ae": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_163ee7df1ffeQvH2BkGLLdjJ5v",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
