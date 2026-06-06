@@ -3,6 +3,8 @@
 {{- if and $isCompanyComputer (not $model) -}}
 {{- $model = "gemini-3.5-flash" -}}
 {{- end -}}
+{{- $companyOpenAI := dig "opencode" "companyOpenAI" dict . -}}
+{{- $companyOpenAIOptions := dig "opencode" "companyOpenAI" "options" dict . -}}
 {{- $mcpServers := list -}}
 {{- if and $isCompanyComputer (dig "opencode" "mcp" "enabled" true .) -}}
 {{- $mcpServers = dig "opencode" "mcp" "servers" list . -}}
@@ -34,14 +36,10 @@
 {{- if $isCompanyComputer }}
   "provider": {
     "openai": {
-      "name": "LLM Gateway",
-      "options": {
-        "baseURL": "{{ dig "opencode" "companyOpenAI" "baseURL" "" . }}",
-        "apiKey": "{{ dig "opencode" "companyOpenAI" "apiKey" "x" . }}",
-        "headers": {
-          "{{ dig "opencode" "companyOpenAI" "headerName" "x-company-token-header" . }}": "{env:{{ dig "opencode" "companyOpenAI" "tokenEnv" "COMPANY_LLM_TOKEN" . }}}"
-        }
-      },
+      "name": "{{ get $companyOpenAI "name" | default "OpenAI" }}",
+{{- if $companyOpenAIOptions }}
+      "options": {{ $companyOpenAIOptions | toPrettyJson | trimSuffix "\n" | replace "\n" "\n      " }},
+{{- end }}
       "models": {
         "gpt-5.5": {
           "id": "gpt-5.5",

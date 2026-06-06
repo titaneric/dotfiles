@@ -123,6 +123,24 @@ Prefer not to store long-lived secrets directly in `.chezmoidata/fish.toml` if a
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, the custom OpenAI provider and company MCP entries are not rendered.
 
+OpenAI provider options are configured as structured TOML data. If `opencode.companyOpenAI.options` is absent or empty, the `options` block is omitted from the rendered OpenCode provider.
+
+Example OpenAI provider data:
+
+```toml
+[opencode.companyOpenAI]
+name = "Example LLM Gateway"
+
+[opencode.companyOpenAI.options]
+baseURL = "https://llm-gateway.example.internal/openai/v1"
+apiKey = "x"
+
+[opencode.companyOpenAI.options.headers]
+x-company-token-header = "{env:COMPANY_LLM_TOKEN}"
+```
+
+Keep real gateway URLs, header names, token environment variable names, and other provider options in ignored `.chezmoidata/opencode.toml`, not in the public template.
+
 Internal MCP servers are included only on company machines and are configured as TOML data under `.chezmoidata/opencode.toml`. Do not edit raw JSON fragments or manage commas manually; `dot_config/opencode/opencode.json.tmpl` renders the final JSON object.
 
 Example MCP server data:

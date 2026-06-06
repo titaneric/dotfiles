@@ -3,10 +3,14 @@ isCompanyComputer = true
 model = "<company-model-name>"
 
 [opencode.companyOpenAI]
+name = "Example LLM Gateway"
+
+[opencode.companyOpenAI.options]
 baseURL = "https://llm-gateway.example.internal/openai/v1"
 apiKey = "x"
-headerName = "x-company-token-header"
-tokenEnv = "COMPANY_LLM_TOKEN"
+
+[opencode.companyOpenAI.options.headers]
+x-company-token-header = "{env:COMPANY_LLM_TOKEN}"
 
 [opencode.mcp]
 enabled = true
