@@ -5,6 +5,8 @@ set -U fish_user_paths $HOME/.krew/bin $fish_user_paths
 set -U fish_user_paths $HOME/go/bin $fish_user_paths
 set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
+set -gx GPG_TTY (tty)
+
 if status is-interactive
   set -g fish_key_bindings fish_vi_key_bindings
   

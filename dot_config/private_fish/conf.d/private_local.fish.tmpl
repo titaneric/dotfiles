@@ -1,0 +1,17 @@
+{{- range (dig "fish" "private" "fishUserPaths" list .) }}
+set -U fish_user_paths {{ . | quote }} $fish_user_paths
+{{- end }}
+{{- range (dig "fish" "private" "fishAddPaths" list .) }}
+fish_add_path -g {{ . | quote }}
+{{- end }}
+{{- range (dig "fish" "private" "env" list .) }}
+set -gx {{ .name }} {{ .value | quote }}
+{{- end }}
+{{- range (dig "fish" "private" "sourceFiles" list .) }}
+if test -f {{ . | quote }}
+  source {{ . | quote }}
+end
+{{- end }}
+{{- range (dig "fish" "private" "aliases" list .) }}
+alias {{ .name }}={{ .value | quote }}
+{{- end }}
