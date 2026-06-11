@@ -1,0 +1,32 @@
+.github/workflows/chezmoi.yml
+  s_321b35e2dbb04e::t_b01cbde74b1549 180
+examples/chezmoidata/opencode.toml
+  s_321b35e2dbb04e::t_5236a8c0e32b8a 3-4,6-7,9,11,13,15-32
+dot_config/opencode/opencode.json.tmpl
+  h_b226f8f01dceab 51
+  s_321b35e2dbb04e::t_5236a8c0e32b8a 3-24,46-47,54-55
+README.md
+  s_321b35e2dbb04e::t_09120a59ce593f 132
+  s_321b35e2dbb04e::t_b01cbde74b1549 124,126,128,131,133-136,138,140,142-149,151-153,297
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "c0712f885ad00d0e1d1da5d3551cd95cf187ac98",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_321b35e2dbb04e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_14a49766cffepWVFAD9KBCpSMC",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
