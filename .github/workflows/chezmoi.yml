@@ -177,7 +177,7 @@ jobs:
           set -euo pipefail
           fish -n "$HOME/.config/fish/config.fish"
           fish -n "$HOME/.config/fish/conf.d/local.fish"
-          grep -q '<company-model-name>' "$HOME/.config/opencode/opencode.json"
+          grep -q 'example-gateway/example-model' "$HOME/.config/opencode/opencode.json"
           grep -q 'internal-docs' "$HOME/.config/opencode/opencode.json"
           grep -q 'example-user' "$HOME/.gitconfig-company"
           grep -q 'company/tap/companyctl' "$HOME/Brewfile-company"

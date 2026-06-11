@@ -121,22 +121,36 @@ Do not put real secrets, real company hostnames, private project paths, or perso
 
 Prefer not to store long-lived secrets directly in `.chezmoidata/fish.toml` if a password manager or company secret manager can supply them. If you do store them locally, keep the file ignored and never paste its contents into public issues, logs, commits, or documentation.
 
-Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, the custom OpenAI provider and company MCP entries are not rendered.
+Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, custom providers, enabled-provider allowlists, and company MCP entries are not rendered.
 
-OpenAI provider options are configured as structured TOML data. If `opencode.companyOpenAI.options` is absent or empty, the `options` block is omitted from the rendered OpenCode provider.
+Provider and model settings are configured as structured TOML arrays. The template renders `opencode.enabledProviders` to OpenCode's `enabled_providers` array, then converts `[[opencode.providers]]` and nested `[[opencode.providers.models]]` arrays into the object shape OpenCode expects.
 
-Example OpenAI provider data:
+Example provider data:
 
 ```toml
-[opencode.companyOpenAI]
+[opencode]
+model = "example-gateway/example-model"
+enabledProviders = ["example-gateway", "openai"]
+
+[[opencode.providers]]
+id = "example-gateway"
 name = "Example LLM Gateway"
+npm = "@ai-sdk/openai-compatible"
 
-[opencode.companyOpenAI.options]
+[opencode.providers.options]
 baseURL = "https://llm-gateway.example.internal/openai/v1"
-apiKey = "x"
+apiKey = "{env:COMPANY_LLM_TOKEN}"
 
-[opencode.companyOpenAI.options.headers]
-x-company-token-header = "{env:COMPANY_LLM_TOKEN}"
+[opencode.providers.options.headers]
+x-company-provider = "example-gateway"
+
+[[opencode.providers.models]]
+id = "example-model"
+name = "Example Model"
+
+[opencode.providers.models.limit]
+context = 131072
+output = 65536
 ```
 
 Keep real gateway URLs, header names, token environment variable names, and other provider options in ignored `.chezmoidata/opencode.toml`, not in the public template.
@@ -280,7 +294,7 @@ Company provider rendering is controlled by:
 isCompanyComputer = true
 ```
 
-When the flag is not set, the custom provider and company MCP entries are omitted.
+When the flag is not set, custom providers, enabled-provider allowlists, and company MCP entries are omitted.
 
 ### Homebrew
 

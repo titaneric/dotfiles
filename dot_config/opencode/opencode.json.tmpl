@@ -1,10 +1,28 @@
 {{- $isCompanyComputer := dig "opencode" "isCompanyComputer" false . -}}
 {{- $model := dig "opencode" "model" "" . -}}
-{{- if and $isCompanyComputer (not $model) -}}
-{{- $model = "gemini-3.5-flash" -}}
+{{- $enabledProviders := list -}}
+{{- $providers := list -}}
+{{- $providerMap := dict -}}
+{{- if $isCompanyComputer -}}
+{{- $enabledProviders = dig "opencode" "enabledProviders" list . -}}
+{{- $providers = dig "opencode" "providers" list . -}}
+{{- range $provider := $providers -}}
+{{- if $provider.id -}}
+{{- $providerConfig := omit $provider "id" "models" -}}
+{{- $models := get $provider "models" -}}
+{{- if $models -}}
+{{- $modelMap := dict -}}
+{{- range $providerModel := $models -}}
+{{- if $providerModel.id -}}
+{{- $_ := set $modelMap $providerModel.id (omit $providerModel "id") -}}
 {{- end -}}
-{{- $companyOpenAI := dig "opencode" "companyOpenAI" dict . -}}
-{{- $companyOpenAIOptions := dig "opencode" "companyOpenAI" "options" dict . -}}
+{{- end -}}
+{{- $_ := set $providerConfig "models" $modelMap -}}
+{{- end -}}
+{{- $_ := set $providerMap $provider.id $providerConfig -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
 {{- $mcpServers := list -}}
 {{- if and $isCompanyComputer (dig "opencode" "mcp" "enabled" true .) -}}
 {{- $mcpServers = dig "opencode" "mcp" "servers" list . -}}
@@ -25,402 +43,16 @@
 {{- if $model }}
   "model": "{{ $model }}",
 {{- end }}
-{{- if $isCompanyComputer }}
-  "enabled_providers": [
-    "openai"
-  ],
+{{- if and $isCompanyComputer $enabledProviders }}
+  "enabled_providers": {{ $enabledProviders | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
 {{- end }}
   "plugin": [
     "@devtheops/opencode-plugin-otel",
+    "./plugins/agentmemory-capture.ts",
     "ecc-universal"
   ],
-{{- if $isCompanyComputer }}
-  "provider": {
-    "openai": {
-      "name": "{{ get $companyOpenAI "name" | default "OpenAI" }}",
-{{- if $companyOpenAIOptions }}
-      "options": {{ $companyOpenAIOptions | toPrettyJson | trimSuffix "\n" | replace "\n" "\n      " }},
-{{- end }}
-      "models": {
-        "gpt-5.5": {
-          "id": "gpt-5.5",
-          "name": "GPT-5.5",
-          "limit": {
-            "context": 1050000,
-            "input": 922000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 5,
-            "output": 30
-          },
-          "options": {
-            "reasoningEffort": "xhigh",
-            "textVerbosity": "high",
-            "reasoningSummary": "auto",
-            "include": [
-              "reasoning.encrypted_content"
-            ]
-          },
-          "temperature": false,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "textVerbosity": "low"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "textVerbosity": "medium"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "textVerbosity": "high"
-            },
-            "xhigh": {
-              "reasoningEffort": "xhigh",
-              "textVerbosity": "high"
-            }
-          }
-        },
-        "gpt-5": {
-          "id": "gpt-5",
-          "name": "GPT-5",
-          "limit": {
-            "context": 400000,
-            "input": 272000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 1.25,
-            "output": 10
-          }
-        },
-        "gpt-5.4": {
-          "id": "gpt-5.4",
-          "name": "GPT-5.4",
-          "limit": {
-            "context": 1050000,
-            "input": 922000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 2.5,
-            "output": 15
-          }
-        },
-        "gpt-5.4-mini": {
-          "id": "gpt-5.4-mini",
-          "name": "GPT-5.4 mini",
-          "limit": {
-            "context": 400000,
-            "input": 272000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 0.75,
-            "output": 4.5
-          }
-        },
-        "gpt-5.4-nano": {
-          "id": "gpt-5.4-nano",
-          "name": "GPT-5.4 nano",
-          "limit": {
-            "context": 400000,
-            "input": 272000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 0.2,
-            "output": 1.25
-          }
-        },
-        "gpt-5.4-pro": {
-          "id": "gpt-5.4-pro",
-          "name": "GPT-5.4 Pro",
-          "limit": {
-            "context": 1050000,
-            "input": 922000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 30,
-            "output": 180
-          }
-        },
-        "gpt-5.5-pro": {
-          "id": "gpt-5.5-pro",
-          "name": "GPT-5.5 Pro",
-          "limit": {
-            "context": 1050000,
-            "input": 922000,
-            "output": 128000
-          },
-          "cost": {
-            "input": 30,
-            "output": 180
-          }
-        },
-        "gemini-3.1-pro-preview": {
-          "id": "gemini/gemini-3.1-pro-preview",
-          "name": "Gemini 3.1 Pro Preview",
-          "limit": {
-            "context": 1114112,
-            "input": 1048576,
-            "output": 65536
-          },
-          "cost": {
-            "input": 2,
-            "output": 12,
-            "cache_read": 0.2,
-            "context_over_200k": {
-              "input": 4,
-              "output": 18,
-              "cache_read": 0.4
-            }
-          },
-          "options": {
-            "reasoningSummary": "auto"
-          },
-          "temperature": true,
-          "reasoning": true,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3-flash-preview": {
-          "id": "gemini/gemini-3-flash-preview",
-          "name": "Gemini 3 Flash Preview",
-          "limit": {
-            "context": 1114112,
-            "input": 1048576,
-            "output": 65536
-          },
-          "cost": {
-            "input": 0.5,
-            "output": 3,
-            "cache_read": 0.05
-          },
-          "options": {
-            "reasoningSummary": "auto"
-          },
-          "temperature": true,
-          "reasoning": true,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "minimal": {
-              "reasoningEffort": "minimal"
-            },
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3.1-flash-lite": {
-          "id": "gemini/gemini-3.1-flash-lite",
-          "name": "Gemini 3.1 Flash-Lite",
-          "limit": {
-            "context": 1114112,
-            "input": 1048576,
-            "output": 65536
-          },
-          "cost": {
-            "input": 0.25,
-            "output": 1.5,
-            "cache_read": 0.025
-          },
-          "options": {
-            "reasoningSummary": "auto"
-          },
-          "temperature": true,
-          "reasoning": true,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "minimal": {
-              "reasoningEffort": "minimal"
-            },
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3.5-flash": {
-          "id": "gemini/gemini-3.5-flash",
-          "name": "Gemini 3.5 Flash",
-          "limit": {
-            "context": 1114112,
-            "input": 1048576,
-            "output": 65536
-          },
-          "cost": {
-            "input": 1.5,
-            "output": 9,
-            "cache_read": 0.15
-          },
-          "options": {
-            "reasoningEffort": "medium",
-            "reasoningSummary": "auto"
-          },
-          "temperature": true,
-          "reasoning": true,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "minimal": {
-              "reasoningEffort": "minimal"
-            },
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        },
-        "gemini-3.1-flash-lite-preview": {
-          "id": "gemini/gemini-3.1-flash-lite-preview",
-          "name": "Gemini 3.1 Flash-Lite Preview",
-          "limit": {
-            "context": 1114112,
-            "input": 1048576,
-            "output": 65536
-          },
-          "cost": {
-            "input": 0.25,
-            "output": 1.5,
-            "cache_read": 0.025
-          },
-          "options": {
-            "reasoningSummary": "auto"
-          },
-          "temperature": true,
-          "reasoning": true,
-          "tool_call": true,
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "audio",
-              "video",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "minimal": {
-              "reasoningEffort": "minimal"
-            },
-            "low": {
-              "reasoningEffort": "low",
-              "reasoningSummary": "auto"
-            },
-            "medium": {
-              "reasoningEffort": "medium",
-              "reasoningSummary": "auto"
-            },
-            "high": {
-              "reasoningEffort": "high",
-              "reasoningSummary": "auto"
-            }
-          }
-        }
-      }
-    }
-  },
+{{- if and $isCompanyComputer $providerMap }}
+  "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
 {{- end }}
   "mcp": {
     "sequential-thinking": {
