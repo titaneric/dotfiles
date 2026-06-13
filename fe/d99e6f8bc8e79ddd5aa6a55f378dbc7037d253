@@ -1,0 +1,24 @@
+.chezmoiscripts/run_onchange_after_16-install-but.sh.tmpl
+  s_c7279a6462e34d::t_4b40132305f530 1-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "fed99e6f8bc8e79ddd5aa6a55f378dbc7037d253",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_c7279a6462e34d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1400e5211ffe1PUTx0BCN2jo5x",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
