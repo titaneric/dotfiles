@@ -1,0 +1,24 @@
+Brewfile.tmpl
+  s_6df953b889b33d::t_a782010090e34c 43-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "b30d07f33d0e0c7526bf6f33ba82a0ec432f8433",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_6df953b889b33d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13e4e95c2ffeXHdBs7RSv30dI9",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
