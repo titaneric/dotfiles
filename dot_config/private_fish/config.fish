@@ -1,9 +1,6 @@
 history merge
 
-set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
-set -U fish_user_paths $HOME/.krew/bin $fish_user_paths
-set -U fish_user_paths $HOME/go/bin $fish_user_paths
-set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
+fish_add_path -U /opt/homebrew/bin $HOME/.npm-global/bin $HOME/.krew/bin $HOME/go/bin $HOME/.cargo/bin
 
 set -gx GPG_TTY (tty)
 
