@@ -104,6 +104,44 @@ jobs:
             fi
           done
 
+      - name: Check fish default shell script behavior
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          rendered_script="$RUNNER_TEMP/set-default-shell-fish.sh"
+          shells_file="$RUNNER_TEMP/shells"
+          fake_bin_dir="$RUNNER_TEMP/fake-bin"
+          chsh_log="$RUNNER_TEMP/chsh.log"
+
+          mkdir -p "$fake_bin_dir"
+          printf '/bin/sh\n/bin/bash\n' > "$shells_file"
+          cat > "$fake_bin_dir/chsh" <<'EOF'
+          #!/usr/bin/env bash
+          printf '%s\n' "$*" > "$CHEZMOI_CHSH_LOG"
+          EOF
+          chmod +x "$fake_bin_dir/chsh"
+
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$HOME" \
+            execute-template --file "$GITHUB_WORKSPACE/.chezmoiscripts/run_onchange_after_08-set-default-shell-fish.sh.tmpl" \
+            > "$rendered_script"
+          bash -n "$rendered_script"
+
+          env \
+            CHEZMOI_SHELLS_FILE="$shells_file" \
+            CHEZMOI_CHSH_BIN="$fake_bin_dir/chsh" \
+            CHEZMOI_CHSH_LOG="$chsh_log" \
+            CHEZMOI_CURRENT_SHELL="/bin/zsh" \
+            USER="ci-user" \
+            bash "$rendered_script"
+
+          fish_path="$(command -v fish)"
+          grep -Fxq "$fish_path" "$shells_file"
+          grep -Fxq -- "-s $fish_path ci-user" "$chsh_log"
+
       - name: Check git-ai installer syntax with sample data
         shell: bash
         env:

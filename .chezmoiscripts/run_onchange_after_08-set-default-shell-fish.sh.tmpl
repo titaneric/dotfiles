@@ -1,0 +1,31 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v fish >/dev/null 2>&1; then
+  echo "fish is not installed; skip default shell setup"
+  exit 0
+fi
+
+fish_path="$(command -v fish)"
+shells_file="${CHEZMOI_SHELLS_FILE:-/etc/shells}"
+chsh_bin="${CHEZMOI_CHSH_BIN:-chsh}"
+current_shell="${CHEZMOI_CURRENT_SHELL:-${SHELL:-}}"
+
+if ! grep -Fxq "$fish_path" "$shells_file" 2>/dev/null; then
+  echo "Add $fish_path to $shells_file"
+  if [ "$shells_file" = "/etc/shells" ]; then
+    printf '%s\n' "$fish_path" | sudo tee -a "$shells_file" >/dev/null
+  else
+    printf '%s\n' "$fish_path" >> "$shells_file"
+  fi
+fi
+
+if [ "$current_shell" = "$fish_path" ]; then
+  echo "fish is already the default shell"
+  exit 0
+fi
+
+echo "Set fish as the default shell"
+"$chsh_bin" -s "$fish_path" "$USER"
+{{- end }}
