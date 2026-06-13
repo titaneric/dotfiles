@@ -1,0 +1,27 @@
+dot_config/private_fish/config.fish
+  s_ffc88ea60bc6f2::t_2756157580e112 3
+.chezmoiscripts/run_after_30-install-markitdown-cli.sh.tmpl
+  s_ffc88ea60bc6f2::t_46fbf90050c6aa 6
+  s_ffc88ea60bc6f2::t_2756157580e112 1-5,7-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "69bb6b38981e057399615c16dc34a96034cbf042",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_ffc88ea60bc6f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13e304577ffeMjQc52ggWZodlu",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
