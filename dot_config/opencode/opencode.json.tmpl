@@ -50,7 +50,6 @@
     "@devtheops/opencode-plugin-otel",
     "./plugins/agentmemory-capture.ts",
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "ecc-universal"
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
