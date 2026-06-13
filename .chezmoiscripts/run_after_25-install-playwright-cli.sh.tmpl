@@ -1,0 +1,25 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+npm_global_bin="$HOME/.npm-global/bin"
+mkdir -p "$npm_global_bin"
+export PATH="$npm_global_bin:$PATH"
+
+for homebrew_bin in /opt/homebrew/bin /usr/local/bin; do
+  if [ -d "$homebrew_bin" ]; then
+    export PATH="$homebrew_bin:$PATH"
+  fi
+done
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm is required before installing Playwright CLI" >&2
+  exit 1
+fi
+
+echo "Install Playwright CLI"
+npm install -g @playwright/cli@latest
+
+playwright-cli --help >/dev/null
+{{- end }}
