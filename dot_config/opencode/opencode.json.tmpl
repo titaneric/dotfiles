@@ -48,22 +48,13 @@
 {{- end }}
   "plugin": [
     "@devtheops/opencode-plugin-otel",
-    "./plugins/agentmemory-capture.ts",
     "superpowers@git+https://github.com/obra/superpowers.git",
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
 {{- end }}
   "mcp": {
-    "sequential-thinking": {
-      "type": "local",
-      "command": [
-        "npx",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "environment": {},
-      "enabled": true
-    }{{- range $server := $mcpServers }},
+  {{- range $server := $mcpServers }},
     "{{ $server.name }}": {{ omit $server "name" | toPrettyJson | trimSuffix "\n" | replace "\n" "\n    " }}{{- end }}
   }
 }
