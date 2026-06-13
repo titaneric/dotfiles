@@ -1,0 +1,14 @@
+Brewfile.tmpl
+  h_b226f8f01dceab 10,20,45,48-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "23ca9f4b931617851e6da329266bbc7a7be10b67",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
