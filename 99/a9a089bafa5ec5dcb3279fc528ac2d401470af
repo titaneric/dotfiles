@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "99a9a089bafa5ec5dcb3279fc528ac2d401470af",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
