@@ -7,6 +7,7 @@
 # category: devops
 tap "grafana/grafana"
 tap "vectordotdev/brew"
+tap "hashicorp/tap"
 brew "argocd"
 brew "kustomize"
 brew "logcli"
@@ -16,6 +17,7 @@ brew "pinact"
 brew "podman"
 brew "podman-compose"
 brew "s3cmd"
+brew "hashicorp/tap/terraform"
 {{ end -}}
 {{ if $common }}
 # category: common
@@ -40,8 +42,17 @@ brew "yq"
 brew "zellij"
 brew "zoxide"
 brew "kubectl"
+# may need to execute `sudo chown -R <user> ~/Library/Application Support/Microsoft Edge` after installing `microsoft-edge` to grant the necessary permissions for Edge to access the user data directory
 cask "microsoft-edge"
 cask "gpg-suite"
+# need to manually remove `flameshot` from Mac's System Settings / Privacy & Security / Screen and System Audio Recording by clicking the `-` button
+# re-add it after installing `flameshot` to grant the necessary permissions for screen recording
+cask "flameshot"
+cask "visual-studio-code@insiders"
+cask "spotify"
+cask "alacritty"
+cask "warp"
+cask "zed"
 {{ end -}}
 {{ if $dev }}
 # category: dev
