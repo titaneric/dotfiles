@@ -1,6 +1,6 @@
 history merge
 
-fish_add_path -U /opt/homebrew/bin $HOME/.npm-global/bin $HOME/.krew/bin $HOME/go/bin $HOME/.cargo/bin
+fish_add_path -U /opt/homebrew/bin $HOME/.local/bin $HOME/.npm-global/bin $HOME/.krew/bin $HOME/go/bin $HOME/.cargo/bin
 
 set -gx GPG_TTY (tty)
 set -gx PLAYWRIGHT_MCP_BROWSER msedge

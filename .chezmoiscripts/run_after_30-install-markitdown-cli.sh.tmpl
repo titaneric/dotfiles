@@ -1,0 +1,23 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for homebrew_bin in /opt/homebrew/bin /usr/local/bin /home/linuxbrew/.linuxbrew/bin; do
+  if [ -d "$homebrew_bin" ]; then
+    export PATH="$homebrew_bin:$PATH"
+  fi
+done
+
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv is required before installing MarkItDown" >&2
+  exit 1
+fi
+
+echo "Install MarkItDown CLI"
+uv tool install 'markitdown[all]'
+
+markitdown --help >/dev/null
+{{- end }}
