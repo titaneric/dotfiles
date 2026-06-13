@@ -15,3 +15,18 @@ toast_duration_secs = 8
 
 [text_editing]
 vim_mode_enabled = true
+
+[agents]
+cloud_conversation_storage_enabled = true
+
+[agents.warp_agent]
+
+[agents.warp_agent.input]
+nld_in_terminal_enabled = false
+
+[account]
+is_settings_sync_enabled = true
+
+[privacy]
+telemetry_enabled = true
+crash_reporting_enabled = true
