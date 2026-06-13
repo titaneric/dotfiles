@@ -1,0 +1,2 @@
+[zed.languageModels.openaiCompatible.genaiGateway]
+apiURL = "https://llm-gateway.example.internal/openai/v1"
