@@ -1,0 +1,27 @@
+.github/workflows/chezmoi.yml
+  s_3c4cf3a6a127e5::t_ff060a74f9fdd0 107-142,144
+  s_3c4cf3a6a127e5::t_bafabc151bfa58 143
+.chezmoiscripts/run_onchange_after_08-set-default-shell-fish.sh.tmpl
+  s_3c4cf3a6a127e5::t_4fefd1ecec3916 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "93c2f3a893c073ed556a148f3d36cc0e255b05c4",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_3c4cf3a6a127e5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13fdd4c77ffe7oTTRdFZzxInf8",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
