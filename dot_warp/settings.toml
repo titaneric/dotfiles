@@ -1,0 +1,17 @@
+[terminal]
+
+[terminal.input]
+input_box_type_setting = "classic"
+honor_ps1 = true
+
+[appearance]
+
+[appearance.text]
+notebook_font_size = 14.0
+font_size = 13.0
+
+[notifications]
+toast_duration_secs = 8
+
+[text_editing]
+vim_mode_enabled = true
