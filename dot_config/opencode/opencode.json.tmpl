@@ -27,6 +27,12 @@
 {{- if and $isCompanyComputer (dig "opencode" "mcp" "enabled" true .) -}}
 {{- $mcpServers = dig "opencode" "mcp" "servers" list . -}}
 {{- end -}}
+{{- $mcpMap := dict -}}
+{{- range $server := $mcpServers -}}
+{{- if $server.name -}}
+{{- $_ := set $mcpMap $server.name (omit $server "name") -}}
+{{- end -}}
+{{- end -}}
 {
   "$schema": "https://opencode.ai/config.json",
   "share": "disabled",
@@ -53,8 +59,5 @@
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
 {{- end }}
-  "mcp": {
-  {{- range $server := $mcpServers }},
-    "{{ $server.name }}": {{ omit $server "name" | toPrettyJson | trimSuffix "\n" | replace "\n" "\n    " }}{{- end }}
-  }
+  "mcp": {{ $mcpMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }}
 }
