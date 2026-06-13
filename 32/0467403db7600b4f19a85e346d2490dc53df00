@@ -1,0 +1,27 @@
+.chezmoiscripts/run_after_25-install-playwright-cli.sh.tmpl
+  s_ffc88ea60bc6f2::t_884ddc678b1acb 10-15
+  s_ffc88ea60bc6f2::t_9509e40e35e477 1-9,16-25
+dot_config/private_fish/config.fish
+  s_ffc88ea60bc6f2::t_d0170096d7ddbb 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "320467403db7600b4f19a85e346d2490dc53df00",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_ffc88ea60bc6f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13e304577ffeMjQc52ggWZodlu",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
