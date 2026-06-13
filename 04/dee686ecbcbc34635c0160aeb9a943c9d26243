@@ -1,0 +1,28 @@
+dot_config/private_fish/config.fish
+  s_ffc88ea60bc6f2::t_e756035d6c540d 3
+private_dot_npmrc
+  s_ffc88ea60bc6f2::t_6ead0091d1254b 1-2
+.chezmoiscripts/run_after_20-create-npm-global-prefix.sh.tmpl
+  s_ffc88ea60bc6f2::t_85cf0e064d46f5 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "04dee686ecbcbc34635c0160aeb9a943c9d26243",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_ffc88ea60bc6f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13e304577ffeMjQc52ggWZodlu",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
