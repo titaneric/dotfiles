@@ -1,0 +1,14 @@
+dot_config/opencode/AGENTS.md
+  h_b226f8f01dceab 14-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "92be6a803810c6c76573b5db1691b6a55198a617",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
