@@ -1,0 +1,14 @@
+.chezmoiscripts/run_after_30-install-markitdown-cli.sh.tmpl
+  h_b226f8f01dceab 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1cfb01205a4699755e39934552e1b16c573580dd",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
