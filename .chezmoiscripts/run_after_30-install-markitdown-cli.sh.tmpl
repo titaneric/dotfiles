@@ -17,7 +17,7 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 echo "Install MarkItDown CLI"
-uv tool install 'markitdown[all]'
+uv tool install 'markitdown[pdf, docx, pptx]'
 
 markitdown --help >/dev/null
 {{- end }}
