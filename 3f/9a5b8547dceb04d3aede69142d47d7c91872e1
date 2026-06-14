@@ -1,0 +1,24 @@
+.github/workflows/chezmoi.yml
+  s_ec26e80907528c::t_25876b045611ac 260-261
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "3f9a5b8547dceb04d3aede69142d47d7c91872e1",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_ec26e80907528c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_13b5bbbd3ffeF5ocTEQ5xtGz6A",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
