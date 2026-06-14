@@ -257,7 +257,8 @@ jobs:
           rsync -a --exclude '.git' "$GITHUB_WORKSPACE/" "$RUNNER_TEMP/source/"
 
           cat > "$RUNNER_TEMP/source/Brewfile.tmpl" <<'EOF'
-          # CI fixture: intentionally empty to exercise brew bundle without installing packages.
+          # CI fixture: install uv so MarkItDown can be installed without the full Brewfile.
+          brew "uv"
           EOF
 
           cat > "$RUNNER_TEMP/source/dot_krew-plugin.txt" <<'EOF'
