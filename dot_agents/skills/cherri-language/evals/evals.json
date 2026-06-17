@@ -1,0 +1,23 @@
+{
+  "skill_name": "cherri-language",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Write a complete Cherri shortcut that shows my current device name, model, system version, and battery level. Include the shortcut metadata and mention how to compile it.",
+      "expected_output": "A .cherri code block with the device actions include, metadata defines, constants for immutable values, show output, and a compile command.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Review this Cherri function and fix the compiler problem: @taxRate = 0.08\nfunction total(number price): number {\n  const tax = @price * @taxRate\n  output(\"{tax}\")\n}\nconst result = total(20)",
+      "expected_output": "Explains function isolated scope, passes taxRate as an argument or moves it inside the function, and returns valid Cherri code.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have an undefined action error for getWifiDetail in a .cherri file. Tell me the likely cause and what exact command I can run to inspect the action docs locally.",
+      "expected_output": "Identifies missing actions include as likely cause and suggests cherri --action=getWifiDetail or project action lookup plus compile/debug commands.",
+      "files": []
+    }
+  ]
+}
