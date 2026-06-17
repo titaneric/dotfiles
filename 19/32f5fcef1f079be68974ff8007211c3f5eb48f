@@ -1,0 +1,14 @@
+dot_config/opencode/opencode.json.tmpl
+  h_b226f8f01dceab 47-52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.8",
+  "base_commit_sha": "1932f5fcef1f079be68974ff8007211c3f5eb48f",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
