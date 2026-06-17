@@ -44,6 +44,12 @@
   "permission": {
     "external_directory": {
       "~/*": "allow",
+    },
+    "bash": {
+      "*": "allow",
+      "git *": "allow",
+      "but *": "allow",
+      "kubectl *": "deny"
     }
   },
 {{- if $model }}
