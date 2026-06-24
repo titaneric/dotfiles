@@ -1,0 +1,14 @@
+dot_gitignore
+  h_b226f8f01dceab 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.11",
+  "base_commit_sha": "ab6378b7c11ca0126a1342cdec70e71fd8bf7d9b",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
