@@ -17,3 +17,4 @@ docs/graphify-out/manifest.json
 docs/graphify-out/cost.json
 docs/graphify-out/cache/
 docs/superpowers/
+.playwright-cli/
