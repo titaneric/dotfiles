@@ -55,5 +55,3 @@
 	path = ~/.gitconfig-company
 [gpg]
 	program = /opt/homebrew/bin/gpg
-[include]
-	path = ~/.gitconfig-git-ai

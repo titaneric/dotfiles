@@ -190,6 +190,24 @@
       "skillFolderHash": "3cf54553433e55875c664baf78f9c769820bdfac155f09bf2989d70e20e6e147",
       "installedAt": "2026-05-08T03:04:29.295Z",
       "updatedAt": "2026-05-08T03:04:29.295Z"
+    },
+    "open-code-review": {
+      "source": "alibaba/open-code-review",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/alibaba/open-code-review.git",
+      "skillPath": "skills/open-code-review/SKILL.md",
+      "skillFolderHash": "841dd11d5ad9df23d8c6953965ab946dcee8ffe2",
+      "installedAt": "2026-06-15T08:33:44.571Z",
+      "updatedAt": "2026-06-15T08:33:44.571Z"
+    },
+    "rust-skills": {
+      "source": "leonardomso/rust-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/leonardomso/rust-skills.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "fd2a861ab0406a4ac536a55274d14ea6fd1ca9c9",
+      "installedAt": "2026-06-21T13:16:58.986Z",
+      "updatedAt": "2026-06-21T13:16:58.986Z"
     }
   },
   "dismissed": {
@@ -198,16 +216,16 @@
   "lastSelectedAgents": [
     "amp",
     "antigravity",
+    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
     "deepagents",
-    "dexto",
-    "firebender",
     "gemini-cli",
     "github-copilot",
-    "kimi-cli",
+    "kimi-code-cli",
     "opencode",
-    "warp"
+    "warp",
+    "zed"
   ]
 }
