@@ -60,7 +60,8 @@
 {{- end }}
   "plugin": [
     "@devtheops/opencode-plugin-otel",
-    "superpowers@git+https://github.com/obra/superpowers.git"
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@dietrichgebert/ponytail"
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
