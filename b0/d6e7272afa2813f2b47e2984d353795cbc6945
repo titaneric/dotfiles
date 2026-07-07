@@ -1,0 +1,26 @@
+dot_config/opencode/AGENTS.md
+  s_9e09153aa461b5::t_edaf458c6fb6e4 132-133
+  s_9e09153aa461b5::t_857bcb6d7179bc 35-37,63-131,134-162
+  s_9e09153aa461b5::t_ceb28f14c6b5fe 38-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b0d6e7272afa2813f2b47e2984d353795cbc6945",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_9e09153aa461b5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0c55c866effehkEWFci4O3Cxxk",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
