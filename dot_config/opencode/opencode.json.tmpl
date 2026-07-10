@@ -62,7 +62,6 @@
     "@devtheops/opencode-plugin-otel",
     "superpowers@git+https://github.com/obra/superpowers.git",
     "@dietrichgebert/ponytail",
-    "@mohak34/opencode-notifier@latest",
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},

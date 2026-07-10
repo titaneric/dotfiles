@@ -55,8 +55,9 @@
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/engineering/grill-with-docs/SKILL.md",
       "skillFolderHash": "21adba95de7d93065d9fec725ddf37f871e01d05",
+      "pluginName": "mattpocock-skills",
       "installedAt": "2026-04-28T16:27:36.695Z",
-      "updatedAt": "2026-07-01T10:49:43.883Z"
+      "updatedAt": "2026-07-10T13:55:29.021Z"
     },
     "improve-codebase-architecture": {
       "source": "mattpocock/skills",
@@ -64,17 +65,19 @@
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
       "skillFolderHash": "e5beae48471adf87c513b5cbcb0ca347467546da",
+      "pluginName": "mattpocock-skills",
       "installedAt": "2026-04-28T16:27:36.696Z",
-      "updatedAt": "2026-07-01T10:49:45.713Z"
+      "updatedAt": "2026-07-10T13:55:29.023Z"
     },
     "tdd": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/engineering/tdd/SKILL.md",
-      "skillFolderHash": "0594874449739c280ed6b7878a8ab1252c5ae228",
+      "skillFolderHash": "57e1bee887816ed2af745e5fd388f224f6e61ada",
+      "pluginName": "mattpocock-skills",
       "installedAt": "2026-04-28T16:27:36.696Z",
-      "updatedAt": "2026-07-01T10:49:48.262Z"
+      "updatedAt": "2026-07-10T13:55:29.026Z"
     },
     "code-review-and-quality": {
       "source": "addyosmani/agent-skills",
@@ -453,6 +456,65 @@
       "skillFolderHash": "202895f6537dcee3c63082564b1b8211b66348fe",
       "installedAt": "2026-07-01T10:50:40.081Z",
       "updatedAt": "2026-07-01T10:50:40.081Z"
+    },
+    "prototype": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/prototype/SKILL.md",
+      "skillFolderHash": "e50d76191bf197e3d947eb8c780c7009269ba589",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-10T13:55:29.025Z",
+      "updatedAt": "2026-07-10T13:55:29.025Z"
+    },
+    "wayfinder": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/wayfinder/SKILL.md",
+      "skillFolderHash": "83a96a4454c069148d8648fd21ca62a58ac15db2",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-10T13:55:29.027Z",
+      "updatedAt": "2026-07-10T13:55:29.027Z"
+    },
+    "writing-great-skills": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/writing-great-skills/SKILL.md",
+      "skillFolderHash": "c84411b360fad91b8756e60fa17fd5b5761422dd",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-10T13:55:29.029Z",
+      "updatedAt": "2026-07-10T13:55:29.029Z"
+    },
+    "to-spec": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/to-spec/SKILL.md",
+      "skillFolderHash": "b2f449aa3da9578b08dcea74afd9adee20285586",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-10T13:55:29.030Z",
+      "updatedAt": "2026-07-10T13:55:29.030Z"
+    },
+    "to-tickets": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/to-tickets/SKILL.md",
+      "skillFolderHash": "c0bc0e58663eec76e769c1496fe124be4545a2ff",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-10T13:55:29.031Z",
+      "updatedAt": "2026-07-10T13:55:29.031Z"
+    },
+    "request-refactor-plan": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/deprecated/request-refactor-plan/SKILL.md",
+      "skillFolderHash": "b0617c9cf69ac1e73a6b30f78c82ff81372079fd",
+      "installedAt": "2026-07-10T13:55:29.032Z",
+      "updatedAt": "2026-07-10T13:55:29.032Z"
     }
   },
   "dismissed": {
