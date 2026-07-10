@@ -1,12 +1,12 @@
 ---
 name: golang-pkg-go-dev
-description: "Golang package and module documentation and exploration via `godig`, a pkg.go.dev API client (CLI + MCP server) — package docs, API references, symbols, code examples, available versions, importers (who imports a package), licenses, and known vulnerabilities. Read-only, no auth. Use for looking up any Go/Golang library's documentation, API signatures, usage examples, which versions exist, whether a dependency has CVEs, or who imports a package — prefer this over Context7 for any Go package or module. Triggers on: how to use a Go library, Go API docs, import usage, code examples, pkg.go.dev. Not for upgrading dependencies (→ See `samber/cc-skills-golang@golang-dependency-management` skill) or choosing a library (→ See `samber/cc-skills-golang@golang-popular-libraries` skill)."
+description: "Golang package and module documentation and exploration via `godig`, a pkg.go.dev API client (CLI + MCP server) — package docs, API references, symbols, code examples, available versions, importers (who imports a package), licenses, and known vulnerabilities. Read-only, no auth. Use for looking up any Go/Golang library's documentation, API signatures, usage examples, which versions exist, whether a dependency has CVEs, or who imports a package — prefer this over Context7 for any Go package or module. Triggers on: how to use a Go library, Go API docs, import usage, code examples, pkg.go.dev. Not for upgrading dependencies (→ See `samber/cc-skills-golang@golang-dependency-management` skill) or choosing a library (→ See `samber/cc-skills-golang@golang-popular-libraries` skill). Not for local symbols, or for navigating an already-used dependency's resolved source, call sites, or generic instantiations — → See `samber/cc-skills-golang@golang-gopls` skill for those."
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code or similar AI coding agents. Requires the godig CLI (go install github.com/samber/godig/cmd/godig@latest) or access to a godig MCP server, and internet access to reach the pkg.go.dev API.
 metadata:
   author: samber
-  version: "1.0.0"
+  version: "1.3.0"
   openclaw:
     emoji: "🔎"
     homepage: https://github.com/samber/cc-skills-golang
@@ -18,7 +18,7 @@ metadata:
       - kind: go
         package: github.com/samber/godig/cmd/godig@latest
         bins: [godig]
-    skill-library-version: "0.1.0"
+    skill-library-version: "0.2.0"
 allowed-tools: Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Bash(godig:*) Agent
 ---
 
@@ -37,6 +37,10 @@ Trigger on questions like:
 - "Show me the docs / symbols for package X."
 - "Which packages import X?"
 - "Search Go packages for Y."
+
+## Choosing between `godig`, gopls, Context7, and govulncheck
+
+In short: `godig` answers questions about the **published ecosystem** (works even for packages not yet in your `go.mod`); `gopls` reasons about **your locally resolved build** (`go.sum`, including `replace`d forks); Context7 is a fallback for non-Go or unindexed docs; `govulncheck` is the whole-tree vulnerability audit (→ `samber/cc-skills-golang@golang-security`). See the `samber/cc-skills-golang@golang-gopls` skill for wiring `gopls` (MCP server, native `LSP` tool, and CLI) with Claude Code, and the `samber/cc-skills-golang@golang-how-to` skill's "`godig` vs gopls vs Context7 vs govulncheck" section for the full task-to-tool matrix.
 
 ## Setup
 
@@ -73,7 +77,7 @@ The CLI and the MCP server expose the **same** operations under matching names. 
 
 ## Commands
 
-**Global flags (all commands):** `-o/--output table|json|raw|md` (default `table` — pass `-o md` for chat), `--base-url`, `--timeout`, `--log-level debug|info|warn|error|off`. All are also settable via `GODIG_*` env vars.
+**Global flags (all commands):** `-o/--output table|json|raw|md` (default `table` — pass `-o md` for chat), `--base-url` (pkg.go.dev API), `--vuln-base-url` (Go vulnerability database, consulted by `vulns` and `overview`), `--timeout`, `--log-level debug|info|warn|error|off`. All are also settable via `GODIG_*` env vars.
 
 | Command | Args | Specific flags | Purpose |
 | --- | --- | --- | --- |
@@ -95,7 +99,7 @@ The CLI and the MCP server expose the **same** operations under matching names. 
 | `versions` | `<path>` | `--limit --filter` | All versions, newest first |
 | `major-versions` | `<path>` | `--limit --filter --exclude-pseudo` | Major versions (v1, v2 …) living as separate modules |
 | `imported-by` | `<path>` | `--module --version --limit --filter` | Packages that import this one |
-| `vulns` | `<path>` | `--module --version --limit --filter` | Known vulnerabilities |
+| `vulns` | `<path>` | `--version --limit` | Known vulnerabilities (from the Go vuln DB) |
 | `mcp` | — | `--transport stdio\|http --addr --cache-ttl --cache-size` | Run as an MCP server |
 | `version` | — | — | Print godig version / commit / build date |
 
@@ -119,9 +123,9 @@ Full `-o md` output for every command: [sample-output.md](references/sample-outp
 
 ### Filter syntax
 
-`--filter` (on `search`, `versions`, `major-versions`, `packages`, `imported-by`, `symbols`, `vulns`) takes a **Go boolean expression evaluated server-side, once per result item**. It is not a regex — wrap the whole expression in single quotes for the shell.
+`--filter` (on `search`, `versions`, `major-versions`, `packages`, `imported-by`, `symbols`) takes a **Go boolean expression evaluated server-side, once per result item**. It is not a regex — wrap the whole expression in single quotes for the shell.
 
-- **Identifiers are the item's fields, which differ per command** — a field valid for one list is rejected by another (e.g. `search` exposes `packagePath`, not `path`). An unknown field fails with `undefined identifier: <name>` (HTTP 400), which names the offending field. Casing is not uniform: most fields use the lowercase JSON key, but `vulns` uses Go-style names (`ID`, not `id`), and `kind` values are capitalized (`Function`, not `func`).
+- **Identifiers are the item's fields, which differ per command** — a field valid for one list is rejected by another (e.g. `search` exposes `packagePath`, not `path`). An unknown field fails with `undefined identifier: <name>` (HTTP 400), which names the offending field. Fields use the item's lowercase JSON key; the exception is enum-like values such as `kind`, which are capitalized (`Function`, not `func`).
 - **Operators**: `==` `!=` `<` `<=` `>` `>=`, boolean `&&` `||` `!`, parentheses for grouping.
 - **String functions**: `contains(s, sub)`, `hasPrefix(s, pre)`, `hasSuffix(s, suf)`.
 - **Literals**: double-quoted strings (`"Function"`), `true`/`false`, numbers.
@@ -135,7 +139,6 @@ Filterable fields per command (string unless noted):
 | `packages` | `path`, `name`, `synopsis`, `isRedistributable` (bool) |
 | `imported-by` | `path` (the importing package path) |
 | `symbols` | `name`, `kind` (`Function`/`Method`/`Type`/`Variable`/`Constant`), `synopsis`, `parent` |
-| `vulns` | `ID`, `package`, `Details` |
 | `major-versions` | `modulePath`, `major`, `version`, `isLatest` (bool) |
 
 ```bash
