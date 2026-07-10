@@ -435,24 +435,21 @@
       "pluginName": "mattpocock-skills",
       "installedAt": "2026-07-10T14:10:29.181Z",
       "updatedAt": "2026-07-10T14:10:29.181Z"
+    },
+    "hunk-review": {
+      "source": "modem-dev/hunk",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/modem-dev/hunk.git",
+      "skillPath": "skills/hunk-review/SKILL.md",
+      "skillFolderHash": "dcdffe55e1a26317d4639174fe2b66ae71686b6c",
+      "installedAt": "2026-07-10T17:16:44.889Z",
+      "updatedAt": "2026-07-10T17:16:44.889Z"
     }
   },
   "dismissed": {
     "findSkillsPrompt": true
   },
   "lastSelectedAgents": [
-    "amp",
-    "antigravity",
-    "antigravity-cli",
-    "cline",
-    "codex",
-    "cursor",
-    "deepagents",
-    "gemini-cli",
-    "github-copilot",
-    "kimi-code-cli",
-    "opencode",
-    "warp",
-    "zed"
+    "opencode"
   ]
 }
