@@ -1,0 +1,14 @@
+dot_agents/dot_skill-lock.json
+  h_b226f8f01dceab 438-446,453
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.11",
+  "base_commit_sha": "cefa78ff4025c60015e812b55abd7126d46ca455",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
