@@ -1,0 +1,35 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for bin_dir in "$HOME/.local/bin" "$HOME/.npm-global/bin" /opt/homebrew/bin /usr/local/bin /home/linuxbrew/.linuxbrew/bin; do
+  if [ -d "$bin_dir" ]; then
+    export PATH="$bin_dir:$PATH"
+  fi
+done
+
+skills_dir="$HOME/.agents/skills"
+mkdir -p "$skills_dir"
+
+if command -v but >/dev/null 2>&1; then
+  echo "Install GitButler agent skill"
+  but skill install --path "$skills_dir/gitbutler"
+fi
+
+if command -v browser-harness >/dev/null 2>&1; then
+  echo "Install Browser Harness agent skill"
+  mkdir -p "$skills_dir/browser-harness"
+  browser-harness skill >"$skills_dir/browser-harness/SKILL.md"
+fi
+
+if command -v gcx >/dev/null 2>&1; then
+  echo "Install gcx agent skills"
+  gcx agent skills install --all --force --dir "$HOME/.agents"
+fi
+
+if command -v playwright-cli >/dev/null 2>&1; then
+  echo "Install Playwright CLI agent skill"
+  (cd "$HOME" && playwright-cli install --skills=agents)
+fi
+{{- end }}
