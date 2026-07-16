@@ -4,12 +4,8 @@ fishUserPaths = [
   "$HOME/.local/bin",
   "$HOME/path/to/private/project/.venv/bin",
 ]
-fishAddPaths = [
-  "$HOME/.private-tool/bin",
-]
-sourceFiles = [
-  "$HOME/private-sdk/path.fish.inc",
-]
+fishAddPaths = ["$HOME/.private-tool/bin"]
+sourceFiles = ["$HOME/private-sdk/path.fish.inc"]
 
 [[fish.private.env]]
 name = "GOPRIVATE"
@@ -30,6 +26,22 @@ value = "<secret-token-or-env-reference>"
 [[fish.private.env]]
 name = "COMPANY_GIT_TOKEN"
 value = "<secret-token-or-env-reference>"
+
+[[fish.private.env]]
+name = "OCR_LLM_TOKEN"
+value = "<secret-token-or-env-reference>"
+
+[[fish.private.env]]
+name = "OCR_LLM_URL"
+value = "https://llm-gateway.example.internal/v1/messages"
+
+[[fish.private.env]]
+name = "OCR_USE_ANTHROPIC"
+value = "false"
+
+[[fish.private.env]]
+name = "OCR_LLM_MODEL"
+value = "example-model"
 
 [[fish.private.aliases]]
 name = "ws"

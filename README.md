@@ -10,6 +10,7 @@ Never commit real values for any of these:
 
 - API tokens, OAuth tokens, PATs, service-account tokens, or passwords.
 - Company hostnames, internal registry URLs, internal MCP URLs, internal model gateway URLs, or private project paths unless they are approved for public release.
+- OCR LLM endpoints, OCR tokens, and OCR model names from `OCR_*` environment variables.
 - `~/.ssh` private keys, `~/.gnupg` key material, `~/.kube/config`, Docker auth files, cloud credential databases, or generated login/session state.
 - Local chezmoi data under `.chezmoidata/*.toml` when it contains machine, company, or secret values.
 - Internal MCP endpoints, model gateways, or private provider details in local data files such as `.chezmoidata/opencode.toml`.
@@ -120,6 +121,8 @@ $EDITOR .chezmoidata/vscode.toml
 Do not put real secrets, real company hostnames, private project paths, or personal identifiers into `examples/`. If the sample shape changes, update both the sample file and the consuming template together.
 
 Prefer not to store long-lived secrets directly in `.chezmoidata/fish.toml` if a password manager or company secret manager can supply them. If you do store them locally, keep the file ignored and never paste its contents into public issues, logs, commits, or documentation.
+
+Open Code Review (`ocr`) is installed by `.chezmoiscripts/run_after_25-install-npm-clis.sh.tmpl`. Its LLM configuration is intentionally env-backed through ignored `.chezmoidata/fish.toml` entries such as `OCR_LLM_TOKEN`, `OCR_LLM_URL`, `OCR_USE_ANTHROPIC`, and `OCR_LLM_MODEL`; do not commit real OCR endpoints, tokens, or model names.
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, custom providers, enabled-provider allowlists, and company MCP entries are not rendered.
 
@@ -301,6 +304,8 @@ Agent skills are managed under:
 ```text
 dot_agents/skills -> ~/.agents/skills
 ```
+
+The Open Code Review skill is tracked at `dot_agents/skills/open-code-review`, with its public lock entry in `dot_agents/dot_skill-lock.json.tmpl`.
 
 Public skill lock entries live in `dot_agents/dot_skill-lock.json.tmpl`. Private skill repositories are added with structured TOML in ignored `.chezmoidata/agents.toml`:
 

@@ -20,6 +20,9 @@ fi
 
 echo "Install Playwright CLI"
 npm install -g @playwright/cli@latest
-
 playwright-cli --help >/dev/null
+
+echo "Install Open Code Review CLI"
+npm install -g @alibaba-group/open-code-review@latest
+ocr --help >/dev/null
 {{- end }}
