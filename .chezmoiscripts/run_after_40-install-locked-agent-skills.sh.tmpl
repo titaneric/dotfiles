@@ -1,0 +1,26 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for bin_dir in "$HOME/.npm-global/bin" /opt/homebrew/bin /usr/local/bin /home/linuxbrew/.linuxbrew/bin; do
+  if [ -d "$bin_dir" ]; then
+    export PATH="$bin_dir:$PATH"
+  fi
+done
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "npx is required before installing locked agent skills" >&2
+  exit 1
+fi
+
+if [ ! -f "$HOME/.agents/.skill-lock.json" ]; then
+  echo "$HOME/.agents/.skill-lock.json is required before installing locked agent skills" >&2
+  exit 1
+fi
+
+echo "Install locked agent skills"
+cd "$HOME/.agents"
+cp .skill-lock.json skills-lock.json
+npx skills experimental_install
+{{- end }}

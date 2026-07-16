@@ -294,6 +294,14 @@ updatedAt = "2026-01-01T00:00:00.000Z"
 
 After the related CLIs are installed, `.chezmoiscripts/run_after_35-install-agent-skills.sh.tmpl` refreshes tool-provided skills with their own subcommands: `but skill install`, `browser-harness skill`, `gcx agent skills install`, and `playwright-cli install --skills=agents`.
 
+After the global skill lock is rendered, `.chezmoiscripts/run_after_40-install-locked-agent-skills.sh.tmpl` runs:
+
+```sh
+cd ~/.agents
+cp .skill-lock.json skills-lock.json
+npx skills experimental_install
+```
+
 ### Homebrew
 
 Homebrew bootstrap is managed by chezmoi scripts:
@@ -305,6 +313,7 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | `.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl` | Installs Worktrunk's OpenCode plugin after Homebrew packages are available. |
 | `.chezmoiscripts/run_onchange_after_07-install-rtk-opencode-hook.sh.tmpl` | Installs RTK's OpenCode hook after Homebrew packages are available. |
 | `.chezmoiscripts/run_after_35-install-agent-skills.sh.tmpl` | Refreshes agent skills from installed CLIs when available. |
+| `.chezmoiscripts/run_after_40-install-locked-agent-skills.sh.tmpl` | Installs skills from the rendered global `.agents/.skill-lock.json`. |
 
 The public base Brewfile is:
 
