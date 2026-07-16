@@ -1,0 +1,11 @@
+[agents]
+
+[[agents.skills]]
+name = "internal-skill"
+source = "https://git.example.internal/team/skills.git"
+sourceType = "git"
+sourceUrl = "https://git.example.internal/team/skills.git"
+skillPath = "internal-skill/SKILL.md"
+skillFolderHash = "example-hash"
+installedAt = "2026-01-01T00:00:00.000Z"
+updatedAt = "2026-01-01T00:00:00.000Z"

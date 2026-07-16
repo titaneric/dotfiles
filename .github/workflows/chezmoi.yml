@@ -187,6 +187,7 @@ jobs:
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/git.toml" "$GITHUB_WORKSPACE/.chezmoidata/git.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/fish.toml" "$GITHUB_WORKSPACE/.chezmoidata/fish.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/homebrew.toml" "$GITHUB_WORKSPACE/.chezmoidata/homebrew.toml"
+          cp "$GITHUB_WORKSPACE/examples/chezmoidata/agents.toml" "$GITHUB_WORKSPACE/.chezmoidata/agents.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/opencode.toml" "$GITHUB_WORKSPACE/.chezmoidata/opencode.toml"
           cp "$GITHUB_WORKSPACE/examples/chezmoidata/vscode.toml" "$GITHUB_WORKSPACE/.chezmoidata/vscode.toml"
 

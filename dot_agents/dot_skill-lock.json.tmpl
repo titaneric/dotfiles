@@ -1,3 +1,4 @@
+{{- $privateSkills := dig "agents" "skills" list . -}}
 {
   "version": 3,
   "skills": {
@@ -445,6 +446,25 @@
       "installedAt": "2026-07-10T17:16:44.889Z",
       "updatedAt": "2026-07-10T17:16:44.889Z"
     }
+{{- range $skill := $privateSkills }}
+{{- if $skill.name }},
+    {{ $skill.name | quote }}: {
+      "source": {{ $skill.source | quote }},
+      "sourceType": {{ $skill.sourceType | quote }},
+      "sourceUrl": {{ $skill.sourceUrl | quote }},
+{{- if get $skill "ref" }}
+      "ref": {{ get $skill "ref" | quote }},
+{{- end }}
+      "skillPath": {{ $skill.skillPath | quote }},
+      "skillFolderHash": {{ $skill.skillFolderHash | quote }},
+{{- if get $skill "pluginName" }}
+      "pluginName": {{ get $skill "pluginName" | quote }},
+{{- end }}
+      "installedAt": {{ $skill.installedAt | quote }},
+      "updatedAt": {{ $skill.updatedAt | quote }}
+    }
+{{- end }}
+{{- end }}
   },
   "dismissed": {
     "findSkillsPrompt": true
