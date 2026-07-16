@@ -16,8 +16,3 @@ base = "https://oauth2:<token>@git.example.internal"
 insteadOf = [
   "https://git.example.internal",
 ]
-
-[git.gitAI]
-enabled = false
-releaseTag = "latest"
-trace2EventTarget = "af_unix:stream:$HOME/.git-ai/internal/daemon/trace2.sock"

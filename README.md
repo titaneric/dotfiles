@@ -253,35 +253,6 @@ insteadOf = [
 
 Prefer Git credential helpers, SSH keys, or a company-approved secret manager over long-lived PATs in files. If a PAT is stored locally, keep it only in ignored `.chezmoidata/git.toml`, rotate it regularly, and never copy it into tracked files.
 
-`git-ai` writes machine-local trace settings. The managed base Git config includes a private optional file:
-
-```text
-~/.gitconfig-git-ai
-```
-
-Enable it with ignored local data:
-
-```toml
-[git.gitAI]
-enabled = true
-releaseTag = "latest"
-trace2EventTarget = "af_unix:stream:$HOME/.git-ai/internal/daemon/trace2.sock"
-```
-
-If `git-ai` changes the socket path, update `.chezmoidata/git.toml` instead of committing the generated trace setting into `dot_gitconfig`.
-
-Git AI installation is managed by:
-
-```text
-.chezmoiscripts/run_onchange_after_15-install-git-ai.sh.tmpl
-```
-
-The script runs the official installer from `https://usegitai.com/install.sh`, which installs the platform binary into `~/.git-ai/bin`, creates the `~/.local/bin/git-ai` symlink, and runs `git-ai install-hooks`.
-
-The official installer also appends PATH entries to detected shell config files. PATH is managed by chezmoi, so the script removes installer-added `~/.git-ai/bin` PATH lines from known shell config files after installation. Keep the path in `.chezmoidata/fish.toml` instead.
-
-After `git-ai install-hooks`, the script removes any direct `trace2.eventTarget` value from the managed base `~/.gitconfig` and writes it to private `~/.gitconfig-git-ai`, keeping installer-managed local state out of the public base Git config.
-
 ### OpenCode
 
 OpenCode config is templated by:

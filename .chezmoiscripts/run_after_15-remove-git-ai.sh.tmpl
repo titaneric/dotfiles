@@ -1,0 +1,14 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if command -v git >/dev/null 2>&1; then
+  git config --global --unset-all trace2.eventTarget 2>/dev/null || true
+  git config --global --unset-all trace2.eventNesting 2>/dev/null || true
+fi
+
+rm -f "$HOME/.local/bin/git-ai"
+rm -f "$HOME/.gitconfig-git-ai"
+rm -rf "$HOME/.git-ai"
+{{- end }}
