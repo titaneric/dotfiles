@@ -1,0 +1,28 @@
+README.md
+  s_712e4bfff4a2b5::t_a415cb3a81d3cf 299-306,317
+.chezmoiscripts/run_after_35-install-agent-skills.sh.tmpl
+  s_712e4bfff4a2b5::t_7bb6cd2da8debe 1-35
+Brewfile.tmpl
+  h_b226f8f01dceab 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "043e8325fdf39b66818d117b6bf9f201cea58724",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_712e4bfff4a2b5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_096c428a4ffegsvFyDWq283W58",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
