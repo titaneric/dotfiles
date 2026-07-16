@@ -1,0 +1,104 @@
+dot_agents/skills/gcx-demo/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-204
+dot_agents/skills/explore-datasources/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-230
+dot_agents/skills/generate-resource-stubs/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-128
+dot_agents/skills/generate-resource-stubs/references/foundation-sdk-guide.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-281
+dot_agents/skills/manage-dashboards/references/resource-model.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-272
+dot_agents/skills/manage-dashboards/references/resource-operations.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-359
+dot_agents/skills/oncall-triage/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-136
+dot_agents/skills/synth-investigate-check/references/failure-modes.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-43
+dot_agents/skills/slo-investigate/references/slo-promql-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-131
+dot_agents/skills/synth-investigate-check/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-215
+dot_agents/skills/aio11y/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-145
+dot_agents/skills/scaffold-project/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-71
+dot_agents/skills/slo-check-status/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-148
+dot_agents/skills/investigate-alert/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-155
+dot_agents/skills/synth-check-status/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-151
+dot_agents/skills/slo-investigate/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-193
+dot_agents/skills/aio11y/references/rule-templates.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-74
+dot_agents/skills/setup-gcx/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-437
+dot_agents/skills/debug-with-grafana/references/query-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-634
+dot_agents/skills/synth-investigate-check/references/sm-promql-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-139
+dot_agents/skills/synth-manage-checks/references/check-types.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-203
+dot_agents/skills/debug-with-grafana/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-622
+dot_agents/skills/debug-with-grafana/references/error-recovery.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-336
+dot_agents/skills/investigate-alert/references/alert-investigation-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-277
+dot_agents/skills/slo-optimize/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-265
+dot_agents/skills/synth-manage-checks/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-177
+dot_agents/skills/browser-harness/SKILL.md
+  s_712e4bfff4a2b5::t_4b374e5123a19b 1-136
+dot_agents/skills/explore-datasources/references/discovery-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-210
+dot_agents/skills/gcx/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-234
+dot_agents/skills/create-dashboard/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-293
+dot_agents/skills/slo-manage/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-197
+dot_agents/skills/setup-gcx/references/configuration.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-258
+dot_agents/skills/manage-dashboards/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-153
+dot_agents/skills/gcx-observability/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-563
+dot_agents/skills/slo-manage/references/slo-templates.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-152
+dot_agents/skills/import-dashboards/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-105
+dot_agents/skills/diagnose-entity-graph/SKILL.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-298
+dot_agents/skills/debug-with-grafana/references/traceql-patterns.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-118
+dot_agents/skills/explore-datasources/references/logql-syntax.md
+  s_712e4bfff4a2b5::t_dc13ab1c22bbd8 1-280
+dot_agents/skills/playwright-cli/SKILL.md
+  s_712e4bfff4a2b5::t_45a1ea026a9a5a 50-54,101,218-223,293-297,345,348,351,417
+dot_agents/skills/playwright-cli/references/test-generation.md
+  s_712e4bfff4a2b5::t_0efad071bc468c 1,3,5-8,10,12-16,40,59,71,82,139-433
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "35b092b1914a5d8db7d3ef33d45efa35a8eee3ab",
+  "prompts": {},
+  "humans": {
+    "h_b226f8f01dceab": {
+      "author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_712e4bfff4a2b5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_096c428a4ffegsvFyDWq283W58",
+        "model": "gpt-5.5"
+      },
+      "human_author": "titaneric <chenyihuang001@gmail.com>"
+    }
+  }
+}
