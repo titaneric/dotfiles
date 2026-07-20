@@ -17,4 +17,5 @@ if status is-interactive
   direnv hook fish | source
   kubectl completion fish | source
   zoxide init fish | source
+  but completions | source
 end
