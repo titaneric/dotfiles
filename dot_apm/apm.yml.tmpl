@@ -7,10 +7,8 @@ dependencies:
     - git: vercel-labs/skills
       skills:
         - find-skills
-    - git: openai/skills
-      ref: main
-      skills:
-        - gh-fix-ci
+    - git: openai/plugins
+      path: plugins/github/skills/gh-fix-ci
     - git: mattpocock/skills
       skills:
         - grill-me
@@ -25,9 +23,6 @@ dependencies:
         - request-refactor-plan
         - diagnosing-bugs
         - handoff
-    - git: addyosmani/agent-skills
-      skills:
-        - code-review-and-quality
     - git: alibaba/open-code-review
       skills:
         - open-code-review
@@ -41,7 +36,6 @@ dependencies:
         - golang-context
         - golang-continuous-integration
         - golang-data-structures
-        - golang-database
         - golang-dependency-injection
         - golang-dependency-management
         - golang-design-patterns
@@ -59,7 +53,6 @@ dependencies:
         - golang-safety
         - golang-security
         - golang-stay-updated
-        - golang-stretchr-testify
         - golang-structs-interfaces
         - golang-testing
         - golang-troubleshooting
