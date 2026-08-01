@@ -86,6 +86,20 @@ jobs:
           fish -n "$HOME/.config/fish/config.fish"
           test ! -e "$HOME/Brewfile-company"
 
+      - name: Check public APM manifest
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          ruby -e '
+            require "yaml"
+            manifest = YAML.load_file(ENV.fetch("HOME") + "/.apm/apm.yml")
+            abort unless manifest.fetch("targets") == ["agent-skills"]
+            abort unless manifest.dig("dependencies", "apm").is_a?(Array)
+          '
+          ! grep -q 'git.example.internal' "$HOME/.apm/apm.yml"
+
       - name: Check rendered script syntax
         shell: bash
         env:
@@ -206,6 +220,21 @@ jobs:
           grep -q 'example-user' "$HOME/.gitconfig-company"
           grep -q 'company/tap/companyctl' "$HOME/Brewfile-company"
 
+      - name: Check sample private APM manifest
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/home
+        run: |
+          set -euo pipefail
+          ruby -e '
+            require "yaml"
+            manifest = YAML.load_file(ENV.fetch("HOME") + "/.apm/apm.yml")
+            private_dependency = manifest.dig("dependencies", "apm").find do |dependency|
+              dependency.is_a?(Hash) && dependency["git"] == "https://git.example.internal/team/skills.git"
+            end
+            abort unless private_dependency && private_dependency["path"] == "internal-skill"
+          '
+
       - name: Check VS Code Insiders sample settings
         shell: bash
         env:
@@ -251,6 +280,18 @@ jobs:
           # CI fixture: intentionally empty to exercise the krew plugin script without installing plugins.
           EOF
 
+          mkdir -p "$RUNNER_TEMP/fake-bin"
+          cat > "$RUNNER_TEMP/fake-bin/apm" <<'EOF'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          printf '%s\n' "$*" >> "$APM_LOG"
+          if [[ " $* " != *" --frozen "* ]]; then
+            mkdir -p "$HOME/.apm"
+            : > "$HOME/.apm/apm.lock.yaml"
+          fi
+          EOF
+          chmod +x "$RUNNER_TEMP/fake-bin/apm"
+
       - name: Apply with scripts against fake home
         shell: bash
         env:
@@ -260,8 +301,14 @@ jobs:
           HOMEBREW_NO_AUTO_UPDATE: "1"
           HOMEBREW_NO_INSTALL_CLEANUP: "1"
           HOMEBREW_NO_ANALYTICS: "1"
+          APM_LOG: ${{ runner.temp }}/apm.log
         run: |
           set -euo pipefail
+          export PATH="$RUNNER_TEMP/fake-bin:$PATH"
+          chezmoi \
+            --source "$RUNNER_TEMP/source" \
+            --destination "$HOME" \
+            apply --force
           chezmoi \
             --source "$RUNNER_TEMP/source" \
             --destination "$HOME" \
@@ -276,3 +323,5 @@ jobs:
           test -f "$HOME/Brewfile"
           test -f "$HOME/.krew-plugin.txt"
           test -x "$HOME/.krew/bin/kubectl-krew"
+          grep -Fxq 'install --global --target agent-skills' "$RUNNER_TEMP/apm.log"
+          grep -Fxq 'install --global --target agent-skills --frozen' "$RUNNER_TEMP/apm.log"

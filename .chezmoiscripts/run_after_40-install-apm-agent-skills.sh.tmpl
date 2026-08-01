@@ -1,0 +1,29 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for bin_dir in /opt/homebrew/bin /usr/local/bin /home/linuxbrew/.linuxbrew/bin; do
+  if [ -d "$bin_dir" ]; then
+    export PATH="$bin_dir:$PATH"
+  fi
+done
+
+if ! command -v apm >/dev/null 2>&1; then
+  echo "apm is required before installing global agent skills" >&2
+  exit 1
+fi
+
+if [ ! -f "$HOME/.apm/apm.yml" ]; then
+  echo "$HOME/.apm/apm.yml is required before installing global agent skills" >&2
+  exit 1
+fi
+
+echo "Install global agent skills with apm"
+cd "$HOME/.apm"
+if [ -f apm.lock.yaml ]; then
+  apm install --global --target agent-skills --frozen
+else
+  apm install --global --target agent-skills
+fi
+{{- end }}

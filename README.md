@@ -270,36 +270,45 @@ isCompanyComputer = true
 
 When the flag is not set, custom providers, enabled-provider allowlists, and company MCP entries are omitted.
 
-Agent skills are managed under:
+APM-managed agent skills are declared under:
 
 ```text
-dot_agents/skills -> ~/.agents/skills
+dot_apm/apm.yml.tmpl -> ~/.apm/apm.yml -> ~/.agents/skills
 ```
 
-The Open Code Review skill is tracked at `dot_agents/skills/open-code-review`, with its public lock entry in `dot_agents/dot_skill-lock.json.tmpl`.
+`dot_agents/skills` is excluded from chezmoi management. On the first apply after
+this migration, the one-time cleanup script removes the existing
+`~/.agents/skills` directory before installers rebuild it.
 
-Public skill lock entries live in `dot_agents/dot_skill-lock.json.tmpl`. Private skill repositories are added with structured TOML in ignored `.chezmoidata/agents.toml`:
+APM keeps its generated lockfile and package cache in `~/.apm/`. The lockfile is
+machine-local because it can include private repository metadata. Public skills
+are declared by `dot_apm/apm.yml.tmpl`; private repositories are added with
+structured TOML in ignored `.chezmoidata/agents.toml`:
 
 ```toml
 [[agents.skills]]
-name = "internal-skill"
 source = "https://git.example.internal/team/skills.git"
-sourceType = "git"
-sourceUrl = "https://git.example.internal/team/skills.git"
-skillPath = "internal-skill/SKILL.md"
-skillFolderHash = "example-hash"
-installedAt = "2026-01-01T00:00:00.000Z"
-updatedAt = "2026-01-01T00:00:00.000Z"
+path = "internal-skill"
+ref = "v1.0.0"
 ```
 
 After the related CLIs are installed, `.chezmoiscripts/run_after_35-install-agent-skills.sh.tmpl` refreshes tool-provided skills with their own subcommands: `but skill install`, `browser-harness skill`, `gcx agent skills install`, and `playwright-cli install --skills=agents`.
 
-After the global skill lock is rendered, `.chezmoiscripts/run_after_40-install-locked-agent-skills.sh.tmpl` runs:
+After the APM manifest is rendered, `.chezmoiscripts/run_after_40-install-apm-agent-skills.sh.tmpl` bootstraps or replays the global skill graph. It creates `~/.apm/apm.lock.yaml` on the first apply and uses frozen installation on every later apply:
 
 ```sh
-cd ~/.agents
-cp .skill-lock.json skills-lock.json
-npx skills experimental_install
+cd ~/.apm
+apm install --global --target agent-skills --frozen
+```
+
+To intentionally refresh skills, review the resulting local lockfile, then
+apply the dotfiles normally:
+
+```sh
+cd ~/.apm
+apm update --global
+apm install --global --target agent-skills
+chezmoi apply
 ```
 
 ### Homebrew
@@ -312,8 +321,9 @@ Homebrew bootstrap is managed by chezmoi scripts:
 | `.chezmoiscripts/run_onchange_after_05-install-homebrew-packages.sh.tmpl` | Runs `brew bundle install` after `Brewfile` is applied when `Brewfile.tmpl`, Homebrew category data, company Homebrew data, or the script changes. |
 | `.chezmoiscripts/run_onchange_after_06-install-worktrunk-opencode-plugin.sh.tmpl` | Installs Worktrunk's OpenCode plugin after Homebrew packages are available. |
 | `.chezmoiscripts/run_onchange_after_07-install-rtk-opencode-hook.sh.tmpl` | Installs RTK's OpenCode hook after Homebrew packages are available. |
+| `.chezmoiscripts/run_once_after_34-reset-agent-skills.sh.tmpl` | Removes legacy `~/.agents/skills` once so installers can take ownership. |
 | `.chezmoiscripts/run_after_35-install-agent-skills.sh.tmpl` | Refreshes agent skills from installed CLIs when available. |
-| `.chezmoiscripts/run_after_40-install-locked-agent-skills.sh.tmpl` | Installs skills from the rendered global `.agents/.skill-lock.json`. |
+| `.chezmoiscripts/run_after_40-install-apm-agent-skills.sh.tmpl` | Bootstraps and frozen-replays the global APM skill graph. |
 
 The public base Brewfile is:
 

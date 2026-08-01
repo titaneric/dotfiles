@@ -1,0 +1,8 @@
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "Remove legacy managed agent skills"
+rm -rf "$HOME/.agents/skills"
+{{- end }}

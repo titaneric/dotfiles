@@ -1,0 +1,79 @@
+name: global-agent-skills
+version: 1.0.0
+targets:
+  - agent-skills
+dependencies:
+  apm:
+    - git: vercel-labs/skills
+      skills:
+        - find-skills
+    - git: openai/skills
+      ref: main
+      skills:
+        - gh-fix-ci
+    - git: mattpocock/skills
+      skills:
+        - grill-me
+        - grill-with-docs
+        - improve-codebase-architecture
+        - tdd
+        - prototype
+        - wayfinder
+        - writing-great-skills
+        - to-spec
+        - to-tickets
+        - request-refactor-plan
+        - diagnosing-bugs
+        - handoff
+    - git: addyosmani/agent-skills
+      skills:
+        - code-review-and-quality
+    - git: alibaba/open-code-review
+      skills:
+        - open-code-review
+    - leonardomso/rust-skills
+    - git: samber/cc-skills-golang
+      skills:
+        - golang-benchmark
+        - golang-cli
+        - golang-code-style
+        - golang-concurrency
+        - golang-context
+        - golang-continuous-integration
+        - golang-data-structures
+        - golang-database
+        - golang-dependency-injection
+        - golang-dependency-management
+        - golang-design-patterns
+        - golang-documentation
+        - golang-error-handling
+        - golang-how-to
+        - golang-lint
+        - golang-modernize
+        - golang-naming
+        - golang-observability
+        - golang-performance
+        - golang-pkg-go-dev
+        - golang-popular-libraries
+        - golang-project-layout
+        - golang-safety
+        - golang-security
+        - golang-stay-updated
+        - golang-stretchr-testify
+        - golang-structs-interfaces
+        - golang-testing
+        - golang-troubleshooting
+    - git: modem-dev/hunk
+      skills:
+        - hunk-review
+{{- range $skill := dig "agents" "skills" list . }}
+{{- if get $skill "source" }}
+    - git: {{ get $skill "source" | quote }}
+{{- if get $skill "path" }}
+      path: {{ get $skill "path" | quote }}
+{{- end }}
+{{- if get $skill "ref" }}
+      ref: {{ get $skill "ref" | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
