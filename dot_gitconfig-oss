@@ -2,3 +2,5 @@
 	name = titaneric
 	email = chenyihuang001@gmail.com
         signingkey = DED3705E8C082EB8
+[core]
+    sshCommand = ssh -i ~/.ssh/github -o IdentitiesOnly=yes

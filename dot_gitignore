@@ -18,3 +18,4 @@ docs/graphify-out/cost.json
 docs/graphify-out/cache/
 docs/superpowers/
 .playwright-cli/
+.codegraph/
