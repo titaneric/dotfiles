@@ -51,7 +51,5 @@
 	path = ~/.gitconfig-oss
 [includeIf "gitdir:~/sources/"]
 	path = ~/.gitconfig-company
-[includeIf "gitdir:~/project-repo/"]
-	path = ~/.gitconfig-company
 [gpg]
 	program = /opt/homebrew/bin/gpg
