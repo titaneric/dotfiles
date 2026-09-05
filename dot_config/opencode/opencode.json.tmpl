@@ -44,6 +44,8 @@
   "permission": {
     "external_directory": {
       "~/*": "allow",
+      "/private/tmp/*": "allow",
+      "/private/var/*": "allow",
     },
     "bash": {
       "*": "allow",
@@ -61,7 +63,6 @@
   "plugin": [
     "@devtheops/opencode-plugin-otel",
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "opencode-scheduler"
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
