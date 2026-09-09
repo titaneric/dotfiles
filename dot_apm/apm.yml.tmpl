@@ -7,10 +7,6 @@ dependencies:
     - git: vercel-labs/skills
       skills:
         - find-skills
-    - git: openai/plugins
-      path: plugins/github/skills/gh-fix-ci
-    - git: openai/plugins
-      path: plugins/github/skills/gh-address-comments
     - git: mattpocock/skills
       skills:
         - grill-me
@@ -67,5 +63,7 @@ dependencies:
 {{- if get $skill "ref" }}
       ref: {{ get $skill "ref" | quote }}
 {{- end }}
+{{- else if get $skill "package" }}
+    - {{ get $skill "package" }}
 {{- end }}
 {{- end }}
