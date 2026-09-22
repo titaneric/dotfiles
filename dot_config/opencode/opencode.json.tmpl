@@ -51,7 +51,10 @@
       "*": "allow",
       "git *": "allow",
       "but *": "allow",
-      "kubectl *": "deny"
+      "kubectl exec *": "ask",
+      "kubectl debug *": "ask",
+      "kubectl apply *": "ask",
+      "kubectl delete *": "ask"
     }
   },
 {{- if $model }}
@@ -63,6 +66,7 @@
   "plugin": [
     "@devtheops/opencode-plugin-otel",
     "superpowers@git+https://github.com/obra/superpowers.git",
+    "/Users/al03160720/.config/opencode/vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs",
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
