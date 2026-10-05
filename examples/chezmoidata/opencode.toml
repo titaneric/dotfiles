@@ -1,4 +1,5 @@
 [opencode]
+# Chezmoi input retains the existing TOML keys; the template emits native V2 JSON.
 isCompanyComputer = true
 model = "example-gateway/example-model"
 enabledProviders = ["example-gateway", "openai"]
@@ -7,6 +8,7 @@ enabledProviders = ["example-gateway", "openai"]
 id = "example-gateway"
 name = "Example LLM Gateway"
 npm = "@ai-sdk/openai-compatible"
+# Rendered as providers.example-gateway.package = "aisdk:@ai-sdk/openai-compatible".
 
 [opencode.providers.options]
 baseURL = "https://llm-gateway.example.internal/openai/v1"
@@ -43,6 +45,7 @@ command = [
   "https://mcp.example.internal/docs",
 ]
 enabled = false
+# Rendered as mcp.servers.internal-docs.disabled = true.
 
 [opencode.mcp.servers.environment]
 NPM_CONFIG_REGISTRY = "https://npm.example.internal"

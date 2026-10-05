@@ -126,7 +126,7 @@ Open Code Review (`ocr`) is installed by `.chezmoiscripts/run_after_25-install-n
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, custom providers, enabled-provider allowlists, and company MCP entries are not rendered.
 
-Provider and model settings are configured as structured TOML arrays. The template renders `opencode.enabledProviders` to OpenCode's `enabled_providers` array, then converts `[[opencode.providers]]` and nested `[[opencode.providers.models]]` arrays into the object shape OpenCode expects.
+Provider and model settings are configured as structured TOML arrays. The template converts `opencode.enabledProviders` to V2 `experimental.policies` (deny by default, then allow each listed provider), and `[[opencode.providers]]` and nested `[[opencode.providers.models]]` arrays to V2 `providers` and `models` maps. Existing private TOML retains its input shape; `npm` becomes `package` with an `aisdk:` prefix, `options` becomes `settings`, and `options.headers` becomes provider `headers`. The rendered JSON uses V2 field names, not V1 aliases.
 
 Example provider data:
 
@@ -181,6 +181,12 @@ NPM_CONFIG_REGISTRY = "https://npm.example.internal"
 ```
 
 Keep real MCP server names, internal URLs, registry URLs, and tokens in ignored `.chezmoidata/opencode.toml`, not in the public repo.
+
+The MCP template renders entries under V2 `mcp.servers`, inverts each `enabled` flag into `disabled`, and converts legacy numeric `timeout` to both `timeout.catalog` and `timeout.execution`. A missing flag keeps the server enabled by default.
+
+The global template also renders V2 `permissions` (including the `shell` action), `compaction.buffer`, and `plugins`. V1 `compaction.prune` has no V2 equivalent and is omitted. No managed V1 agents, commands, skills, snapshots, media, references, or terminal `tui.json` settings need conversion; the empty `.opencode/commands/` directory has no definitions to move. V2 terminal preferences belong in `~/.config/opencode/cli.json` if you add any.
+
+**Plugin compatibility must be checked separately.** Renaming `plugin` to `plugins` does not port V1 implementations. The configured OTel, Superpowers, and vendored i-have-adhd plugins, the tool-installed Worktrunk and RTK plugins, and this repository's `.opencode/package.json` V1 `@opencode-ai/plugin` dependency are not migrated by the config template. Verify V2-compatible releases or ports before relying on their hooks; the repository has no plugin implementation that can be ported here. V2 plugin implementations use `@opencode/plugin` and the V2 `Plugin.define` API. Integrations calling the V1 server API likewise require a V2 client/API port; none are managed by this repository.
 
 ### VS Code Insiders
 

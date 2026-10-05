@@ -8,13 +8,43 @@
 {{- $providers = dig "opencode" "providers" list . -}}
 {{- range $provider := $providers -}}
 {{- if $provider.id -}}
-{{- $providerConfig := omit $provider "id" "models" -}}
+{{- $providerConfig := omit $provider "id" "models" "npm" "api" "options" -}}
+{{- if get $provider "npm" -}}
+{{- $_ := set $providerConfig "package" (printf "aisdk:%s" (get $provider "npm")) -}}
+{{- end -}}
+{{- $settings := omit (get $provider "options" | default dict) "headers" "body" -}}
+{{- if get $provider "api" -}}
+{{- $_ := set $settings "baseURL" (get $provider "api") -}}
+{{- end -}}
+{{- if $settings -}}
+{{- $_ := set $providerConfig "settings" $settings -}}
+{{- end -}}
+{{- with dig "options" "headers" nil $provider -}}
+{{- $_ := set $providerConfig "headers" . -}}
+{{- end -}}
+{{- with dig "options" "body" nil $provider -}}
+{{- $_ := set $providerConfig "body" . -}}
+{{- end -}}
 {{- $models := get $provider "models" -}}
 {{- if $models -}}
 {{- $modelMap := dict -}}
 {{- range $providerModel := $models -}}
 {{- if $providerModel.id -}}
-{{- $_ := set $modelMap $providerModel.id (omit $providerModel "id") -}}
+{{- $modelConfig := omit $providerModel "id" "options" "variants" "tool_call" "modalities" "status" -}}
+{{- if get $providerModel "options" -}}
+{{- $_ := set $modelConfig "settings" (get $providerModel "options") -}}
+{{- end -}}
+{{- if eq (get $providerModel "status") "deprecated" -}}
+{{- $_ := set $modelConfig "disabled" true -}}
+{{- end -}}
+{{- if get $providerModel "variants" -}}
+{{- $variants := list -}}
+{{- range $variantID, $variant := get $providerModel "variants" -}}
+{{- $variants = append $variants (dict "id" $variantID "settings" $variant) -}}
+{{- end -}}
+{{- $_ := set $modelConfig "variants" $variants -}}
+{{- end -}}
+{{- $_ := set $modelMap $providerModel.id $modelConfig -}}
 {{- end -}}
 {{- end -}}
 {{- $_ := set $providerConfig "models" $modelMap -}}
@@ -30,7 +60,14 @@
 {{- $mcpMap := dict -}}
 {{- range $server := $mcpServers -}}
 {{- if $server.name -}}
-{{- $_ := set $mcpMap $server.name (omit $server "name") -}}
+{{- $serverConfig := omit $server "name" "enabled" -}}
+{{- if hasKey $server "enabled" -}}
+{{- $_ := set $serverConfig "disabled" (not $server.enabled) -}}
+{{- end -}}
+{{- if get $server "timeout" -}}
+{{- $_ := set $serverConfig "timeout" (dict "catalog" (get $server "timeout") "execution" (get $server "timeout")) -}}
+{{- end -}}
+{{- $_ := set $mcpMap $server.name $serverConfig -}}
 {{- end -}}
 {{- end -}}
 {
@@ -38,38 +75,36 @@
   "share": "disabled",
   "compaction": {
     "auto": true,
-    "prune": true,
-    "reserved": 0
+    "buffer": 0
   },
-  "permission": {
-    "external_directory": {
-      "~/*": "allow",
-      "/private/tmp/*": "allow",
-      "/private/var/*": "allow",
-    },
-    "bash": {
-      "*": "allow",
-      "git *": "allow",
-      "but *": "allow",
-      "kubectl exec *": "ask",
-      "kubectl debug *": "ask",
-      "kubectl apply *": "ask",
-      "kubectl delete *": "ask"
-    }
-  },
+  "permissions": [
+    { "action": "external_directory", "resource": "~/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "/private/tmp/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "/private/var/*", "effect": "allow" },
+    { "action": "shell", "resource": "*", "effect": "allow" },
+    { "action": "shell", "resource": "git *", "effect": "allow" },
+    { "action": "shell", "resource": "but *", "effect": "allow" },
+    { "action": "shell", "resource": "kubectl exec *", "effect": "ask" },
+    { "action": "shell", "resource": "kubectl debug *", "effect": "ask" },
+    { "action": "shell", "resource": "kubectl apply *", "effect": "ask" },
+    { "action": "shell", "resource": "kubectl delete *", "effect": "ask" }
+  ],
 {{- if $model }}
   "model": "{{ $model }}",
 {{- end }}
 {{- if and $isCompanyComputer $enabledProviders }}
-  "enabled_providers": {{ $enabledProviders | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
+  "experimental": { "policies": [
+    { "action": "provider.use", "resource": "*", "effect": "deny" }{{ range $providerID := $enabledProviders }},
+    { "action": "provider.use", "resource": {{ $providerID | toJson }}, "effect": "allow" }{{ end }}
+  ] },
 {{- end }}
-  "plugin": [
+  "plugins": [
     "@devtheops/opencode-plugin-otel",
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "/Users/al03160720/.config/opencode/vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs",
+    "/Users/al03160720/.config/opencode/vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs"
   ],
 {{- if and $isCompanyComputer $providerMap }}
-  "provider": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
+  "providers": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
 {{- end }}
-  "mcp": {{ $mcpMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }}
+  "mcp": { "servers": {{ $mcpMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }} }
 }
