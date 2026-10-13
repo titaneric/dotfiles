@@ -25,35 +25,22 @@ dependencies:
       skills:
         - open-code-review
     - leonardomso/rust-skills
+    - cloudflare/security-audit-skill
     - git: samber/cc-skills-golang
       skills:
         - golang-benchmark
-        - golang-cli
-        - golang-concurrency
-        - golang-context
         - golang-continuous-integration
-        - golang-data-structures
         - golang-dependency-injection
         - golang-dependency-management
         - golang-design-patterns
         - golang-documentation
-        - golang-observability
-        - golang-performance
-        - golang-pkg-go-dev
-        - golang-popular-libraries
-        - golang-project-layout
         - golang-safety
         - golang-security
-        - golang-stay-updated
-        - golang-structs-interfaces
         - golang-testing
         - golang-troubleshooting
     - git: jetbrains/go-modern-guidelines/plugin
       skills:
         - use-modern-go
-    - git: modem-dev/hunk
-      skills:
-        - hunk-review
 {{- range $skill := dig "agents" "skills" list . }}
 {{- if get $skill "source" }}
     - git: {{ get $skill "source" | quote }}

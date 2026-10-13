@@ -99,9 +99,6 @@
   ] },
 {{- end }}
   "plugins": [
-    "@devtheops/opencode-plugin-otel",
-    "superpowers@git+https://github.com/obra/superpowers.git",
-    "/Users/al03160720/.config/opencode/vendor/i-have-adhd/.opencode/plugins/i-have-adhd.mjs"
   ],
 {{- if and $isCompanyComputer $providerMap }}
   "providers": {{ $providerMap | toPrettyJson | trimSuffix "\n" | replace "\n" "\n  " }},
