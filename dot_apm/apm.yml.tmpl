@@ -42,6 +42,13 @@ dependencies:
     - git: jetbrains/go-modern-guidelines/plugin
       skills:
         - use-modern-go
+    - Leonxlnx/taste-skill
+    - cathrynlavery/diagram-design
+    - git: anthropics/skills
+      skills:
+        - canvas-design
+        - frontend-design
+
 {{- range $skill := dig "agents" "skills" list . }}
 {{- if get $skill "source" }}
     - git: {{ get $skill "source" | quote }}

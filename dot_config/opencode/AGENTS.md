@@ -41,7 +41,7 @@
 
 ### Branch naming
 
-- When creating a GitButler branch for an agent session, use `<name>/<short-description>`.
+- When creating a GitButler branch for an agent session, use `opencode/<short-description>`.
 
 ### Commit message convention
 
