@@ -32,13 +32,6 @@
 - When other agents' branches are applied, run `but pull --check` first and ask before updating if it reports conflicts or their branches would move.
 - If the user asks you to handle update conflicts, use GitButler's conflict tools. Ask before resolving semantic conflicts, dependency updates, generated files, or conflicts involving another person's work.
 
-### Publish on a shortcut phrase
-
-- When the user says `ship it`, commit this session's changes on its dedicated GitButler branch, creating one if needed.
-- Push the branch and open or update its pull request with GitButler.
-- Reuse the existing branch or pull request for this session when one already exists.
-- Treat this phrase as approval to commit, push, and open or update a pull request without asking again, unless something risky or surprising changed.
-
 ### Branch naming
 
 - When creating a GitButler branch for an agent session, use `opencode/<short-description>`.
