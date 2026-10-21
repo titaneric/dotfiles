@@ -48,7 +48,16 @@ dependencies:
       skills:
         - canvas-design
         - frontend-design
-
+    - wheresryan22/anatomy
+    - git: obra/superpowers
+      skills:
+        - brainstorming
+        - using-superpowers
+        - writing-plans
+        - verification-before-completion
+        - systematic-debugging
+        - systematic-debugging
+        - dispatching-parallel-agents
 {{- range $skill := dig "agents" "skills" list . }}
 {{- if get $skill "source" }}
     - git: {{ get $skill "source" | quote }}
