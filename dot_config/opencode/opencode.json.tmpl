@@ -89,9 +89,6 @@
     { "action": "shell", "resource": "kubectl apply *", "effect": "ask" },
     { "action": "shell", "resource": "kubectl delete *", "effect": "ask" }
   ],
-{{- if $model }}
-  "model": "{{ $model }}",
-{{- end }}
 {{- if and $isCompanyComputer $enabledProviders }}
   "experimental": { "policies": [
     { "action": "provider.use", "resource": "*", "effect": "deny" }{{ range $providerID := $enabledProviders }},
