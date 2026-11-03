@@ -49,15 +49,24 @@ dependencies:
         - canvas-design
         - frontend-design
     - wheresryan22/anatomy
-    - git: obra/superpowers
+    # - git: obra/superpowers
+    #   skills:
+    #     - brainstorming
+    #     - using-superpowers
+    #     - writing-plans
+    #     - verification-before-completion
+    #     - systematic-debugging
+    #     - dispatching-parallel-agents
+    - git: ChromeDevTools/chrome-devtools-mcp
       skills:
-        - brainstorming
-        - using-superpowers
-        - writing-plans
-        - verification-before-completion
-        - systematic-debugging
-        - systematic-debugging
-        - dispatching-parallel-agents
+        - chrome-devtools
+        - a11y-debugging
+        - cookie-debugging
+        - debug-optimize-lcp
+        - memory-leak-debugging
+        - troubleshooting
+    - GoogleChrome/modern-web-guidance
+    - google/elephant-goldfish-model
 {{- range $skill := dig "agents" "skills" list . }}
 {{- if get $skill "source" }}
     - git: {{ get $skill "source" | quote }}
