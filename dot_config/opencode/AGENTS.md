@@ -38,7 +38,7 @@
 
 ### Commit message convention
 
-- Follow the `type(scope): summary \n\n Co-authored-by: OpenCode <noreply@lycorp.co.jp>` commit-message convention when writing commit messages.
+- Follow the `type(scope): summary` commit-message convention when writing commit messages.
 
 ### Commit checkpoints after each turn
 
@@ -47,3 +47,9 @@
 - When the user asks you to tidy the history, use GitButler to squash commits, reword commits, and move changes between commits where appropriate.
 - Only tidy unpublished local history unless the user explicitly authorizes changing pushed or shared history.
 <!-- gitbutler-agent-setup:end -->
+
+## Pull request submission override
+
+- When the user requests a pull request, always submit it with GitHub CLI (`gh pr create`), including in GitButler workspaces and for stacked branches. This rule overrides any GitButler skill guidance to use `but pr`.
+- Use GitButler to push the intended branch, then pass explicit `--head` and `--base` branches to `gh pr create`; for stacked branches, use the immediate parent branch as the base.
+- This rule selects the submission tool only; pushing and opening pull requests still require the user's request.
