@@ -215,8 +215,12 @@ jobs:
           set -euo pipefail
           fish -n "$HOME/.config/fish/config.fish"
           fish -n "$HOME/.config/fish/conf.d/local.fish"
-          grep -q 'example-gateway/example-model' "$HOME/.config/opencode/opencode.json"
-          grep -q 'internal-docs' "$HOME/.config/opencode/opencode.json"
+          ruby -e '
+            require "json"
+            config = JSON.parse(File.read(ENV.fetch("HOME") + "/.config/opencode/opencode.json"))
+            abort "Missing sample provider model" unless config.dig("providers", "example-gateway", "models").is_a?(Hash) && config.dig("providers", "example-gateway", "models").key?("example-model")
+            abort "Missing sample MCP server" unless config.dig("mcp", "servers").is_a?(Hash) && config.dig("mcp", "servers").key?("internal-docs")
+          '
           grep -q 'example-user' "$HOME/.gitconfig-company"
           grep -q 'company/tap/companyctl' "$HOME/Brewfile-company"
 
