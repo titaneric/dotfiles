@@ -67,6 +67,7 @@ dependencies:
         - troubleshooting
     - GoogleChrome/modern-web-guidance
     - google/elephant-goldfish-model
+    - danyuchn/asd-ste100-skill
 {{- range $skill := dig "agents" "skills" list . }}
 {{- if get $skill "source" }}
     - git: {{ get $skill "source" | quote }}

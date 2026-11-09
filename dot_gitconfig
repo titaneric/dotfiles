@@ -2,15 +2,17 @@
 	helper = osxkeychain
 [diff]
 	external = difft
-	tool = difftastic
+	tool = omnidiff
 	algorithm = histogram
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
 [difftool]
 	prompt = false
-[difftool "difftastic"]
-	cmd = difft "$LOCAL" "$REMOTE"
+[difftool "omnidiff"]
+	cmd = omnidiff "$LOCAL" "$REMOTE"
+[core]
+    pager = hunk pager
 [pager]
 	difftool = true
 [alias]
