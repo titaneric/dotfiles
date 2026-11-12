@@ -1,5 +1,6 @@
 {{- $isCompanyComputer := dig "opencode" "isCompanyComputer" false . -}}
 {{- $model := dig "opencode" "model" "" . -}}
+{{- $instructions := dig "opencode" "instructions" list . -}}
 {{- $enabledProviders := list -}}
 {{- $providers := list -}}
 {{- $providerMap := dict -}}
@@ -73,6 +74,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "share": "disabled",
+{{- if and $isCompanyComputer $instructions }}
+  "instructions": {{ $instructions | toJson }},
+{{- end }}
   "compaction": {
     "auto": true,
     "buffer": 0

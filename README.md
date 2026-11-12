@@ -126,6 +126,8 @@ Open Code Review (`ocr`) is installed by `.chezmoiscripts/run_after_25-install-n
 
 Set `isCompanyComputer = false` or omit `.chezmoidata/opencode.toml` on personal machines. When `isCompanyComputer` is false or missing, custom providers, enabled-provider allowlists, and company MCP entries are not rendered.
 
+On company machines, OpenCode loads the files, globs, or URLs listed in `opencode.instructions` in `.chezmoidata/opencode.toml` (for example, `["~/.config/opencode/COMPANY-AGENTS.md"]`). Omit the setting or use `instructions = []` to load no additional instructions. Common instructions in `~/.config/opencode/AGENTS.md` still apply on all machines; the additional company instructions are not loaded on personal machines.
+
 Provider and model settings are configured as structured TOML arrays. The template converts `opencode.enabledProviders` to V2 `experimental.policies` (deny by default, then allow each listed provider), and `[[opencode.providers]]` and nested `[[opencode.providers.models]]` arrays to V2 `providers` and `models` maps. Existing private TOML retains its input shape; `npm` becomes `package` with an `aisdk:` prefix, `options` becomes `settings`, and `options.headers` becomes provider `headers`. The rendered JSON uses V2 field names, not V1 aliases.
 
 Example provider data:

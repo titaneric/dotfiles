@@ -2,6 +2,8 @@
 # Chezmoi input retains the existing TOML keys; the template emits native V2 JSON.
 isCompanyComputer = true
 enabledProviders = ["openai", "ai-gateway"]
+# Additional instructions are loaded only on company machines. Omit or use [] to disable.
+instructions = ["~/.config/opencode/COMPANY-AGENTS.md"]
 
 # Direct OpenAI: connect through /connect with ChatGPT or an OpenAI API key.
 # Do not override its endpoint or credentials with gateway settings.
